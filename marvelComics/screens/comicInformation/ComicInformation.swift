@@ -15,7 +15,7 @@ struct ComicInformation: View {
     @State var comic: Comic
     @Environment(\.presentationMode) var presentation
     
-    //data.results.title
+    
     //data.results.dates
     //data.creators.items 3 ta
     //data.textObjects.text
@@ -34,6 +34,18 @@ struct ComicInformation: View {
                             .resizable()
                             .scaledToFill()
                             .frame(width: UIScreen.width / 3, height: UIScreen.height / 3)
+                    }
+                    if comic.dates?.count != nil{
+                    ForEach(0..<(comic.dates?.count ?? 1)){ index in
+                        if comic.dates?[index].type ?? "" ==  "onsaleDate"{
+                            HStack{
+                                Text("Published date:").fontWeight(.semibold)
+                                Text(Utils.dateFormatter(date: comic.dates?[index].date ?? ""))
+                            }
+                        }else if comic.dates?[index].type ?? "" ==  "focDate"{
+                            
+                        }
+                    }
                     }
                 }
                 .frame(width: UIScreen.width)
