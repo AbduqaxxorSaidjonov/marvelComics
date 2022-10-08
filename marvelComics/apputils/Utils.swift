@@ -13,8 +13,16 @@ class Utils{
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        let resultDate = dateFormatter.date(from: date)
-        return ""
+        let stringToDate = dateFormatter.date(from: date)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy"
+        let resultDate: String
+        if stringToDate == nil{
+            return ""
+        }else{
+            resultDate = formatter.string(from: stringToDate ?? Date())
+        }
+        return resultDate
     }
 }
 extension UIScreen{
