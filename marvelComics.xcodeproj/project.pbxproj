@@ -228,8 +228,8 @@
 				76D768EA28EAFCE60053D077 /* BaseView.swift */,
 				760EB01628EFC0D6007FF1C7 /* Launch Screen.storyboard */,
 				7660600E28EBF9BA00B919BD /* home */,
-				7660601128EBFA8D00B919BD /* settings */,
 				76799CAB28EFFC9400BD0CD1 /* comicInformation */,
+				7660601128EBFA8D00B919BD /* settings */,
 			);
 			path = screens;
 			sourceTree = "<group>";
@@ -543,6 +543,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"marvelComics/Preview Content\"";
+				DEVELOPMENT_TEAM = VTKQQ2B9S4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = marvelComics/Info.plist;
@@ -572,6 +573,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"marvelComics/Preview Content\"";
+				DEVELOPMENT_TEAM = VTKQQ2B9S4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = marvelComics/Info.plist;

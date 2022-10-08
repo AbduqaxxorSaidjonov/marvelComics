@@ -15,7 +15,6 @@ struct ComicInformation: View {
     @State var comic: Comic
     @Environment(\.presentationMode) var presentation
     
-    //data.creators.items 3 ta writer penciler editor
     //data.textObjects.text
     
     
@@ -31,30 +30,40 @@ struct ComicInformation: View {
                         WebImage(url: URL(string: "\(self.comic.thumbnail!.path!).\(self.comic.thumbnail!.extension!)"))
                             .resizable()
                             .scaledToFill()
-                            .frame(width: UIScreen.width / 3, height: UIScreen.height / 3)
+                            .frame(width: UIScreen.width / 2, height: UIScreen.height / 2)
                     }
                     VStack(alignment: .leading){
                         if !(comic.dates?.isEmpty ?? true){
                     ForEach(0..<(comic.dates?.count ?? 1)){ index in
                         if comic.dates?[index].type ?? "" ==  "onsaleDate"{
                             HStack{
-                                Text("Published date:").fontWeight(.semibold)
+                                Text("Published date: ").fontWeight(.semibold)
                                 Text(Utils.dateFormatter(date: comic.dates?[index].date ?? "None Date"))
                             }
-                            .padding(.top , 10)
                         }
                     }
                     }
                         if !(comic.creators?.items?.isEmpty ?? true){
                             ForEach(0..<(comic.creators?.items?.count ?? 1)){ index in
                                 HStack{
-                                    Text("\(comic.creators?.items?[index].role ?? ""):").fontWeight(.semibold)
+                                    Text("\((comic.creators?.items?[index].role ?? "").uppercased()): ").fontWeight(.semibold)
                                 Text(" \(comic.creators?.items?[index].name ?? "")")
                                 }
-                                .padding(.top , 5)
+                                .padding(.top ,5)
                             }
                         }
+                        if !(comic.textObjects?.isEmpty ?? true){
+                            ForEach(0..<(comic.textObjects?.count ?? 1)){ index in
+                                HStack{
+                                    Text("Description: ").fontWeight(.semibold) +
+                                    Text(comic.textObjects?[index].text ?? "No Description")
+                                }
+                                .padding(.top,5)
+                            }
+                        }
+                        
                     }
+                    .padding(.all , 10)
                 }
                 .frame(width: UIScreen.width)
                 .frame(maxHeight: .infinity)
