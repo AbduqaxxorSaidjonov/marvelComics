@@ -8,7 +8,7 @@
 import Foundation
 
 
- struct ComicDataWrapper: Decodable{
+struct ComicDataWrapper: Decodable{
     var code: Int?
     var status: String?
     var copyright: String?
@@ -16,7 +16,7 @@ import Foundation
     var attributionHTML: String?
     var data: ComicDataContainer?
     var etag: String?
-     
+    
 }
 
 struct ComicDataContainer: Decodable{
@@ -25,10 +25,10 @@ struct ComicDataContainer: Decodable{
     var total: Int?
     var count: Int?
     var results: [Comic]?
-  
+    
 }
 
-struct Comic: Identifiable, Decodable{
+struct Comic:Decodable{
     var id: Int?
     var digitalId: Int?
     var title: String?

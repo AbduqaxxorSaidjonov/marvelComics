@@ -64,6 +64,17 @@ struct ComicInformationView: View {
                 }
                 .frame(width: UIScreen.width)
                 .frame(maxHeight: .infinity)
+                if viewModel.isLoading{
+                    ZStack{
+                        Color(.systemBackground)
+                            .ignoresSafeArea()
+                            .opacity(0.8)
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.red))
+                            .scaleEffect(2)
+                    }
+                    .padding(.vertical ,UIScreen.height / 3)
+                }
             }
         }
         .navigationBarTitle("Comic's information",displayMode: .inline)

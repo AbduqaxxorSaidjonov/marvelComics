@@ -14,6 +14,45 @@ private let private_key = "2c71b7811774dff516dada5fef3c6a8cd80aca84"
 
 class AFHttp{
     
+    static let API_COMICS_LIST = "/comics"
+    static let API_COMIC_SINGLE = "/comics/" //id
+    
+    class func get(url: String,offset: Int,completion: ((ComicDataWrapper)->Void)? = nil){
+        guard let url = URL(string: AFHttp.server(url: url,offset: offset)) else {return}
+        let session = URLSession.shared
+        
+        session.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                print("ERROR: \(error.localizedDescription)")
+                return
+            }else{
+                
+                print(url)
+                
+                guard let data = data, let response = response as? HTTPURLResponse else {
+                    print("ERROR: Couldn't read response object")
+                    return
+                }
+                
+                print(response)
+                print(data)
+                
+                guard response.statusCode == 200 else {
+                    print("ERROR: Server responded status \(response.statusCode)")
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                
+                let comics = try? decoder.decode(ComicDataWrapper.self, from: data)
+                print(comics)
+                completion?(comics ?? ComicDataWrapper())
+            }
+            
+        }
+        .resume()
+    }
+    
     class func server(url: String,offset: Int) -> String{
         let ts = String(Date().timeIntervalSince1970)
         let hash = MD5(data: "\(ts)\(private_key)\(public_key)")
@@ -21,9 +60,6 @@ class AFHttp{
         return  request_url
     }
     
-    static let API_COMICS_LIST = "/comics"
-    static let API_COMIC_SINGLE = "/comics/" //id
-   
     class func MD5(data: String) -> String{
         let hash = Insecure.MD5.hash(data: data.data(using: .utf8) ?? Data())
         return hash.map{

@@ -25,6 +25,12 @@ class Utils{
         return resultDate
     }
 }
+
+extension String
+{
+    var digitString: String { filter { ("0"..."9").contains($0) } }
+}
+
 extension UIScreen{
     static let width = UIScreen.main.bounds.size.width
     static let height = UIScreen.main.bounds.size.height

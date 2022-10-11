@@ -11,16 +11,16 @@ import SDWebImageSwiftUI
 struct ComicCell: View {
     
     var comic: Comic
-
+    
     var body: some View {
         VStack(alignment: .leading){
             WebImage(url: URL(string: "\(self.comic.thumbnail!.path!).\(self.comic.thumbnail!.extension!)"))
                 .resizable()
                 .scaledToFill()
-//                .redacted(reason: .placeholder)
+            //     .redacted(reason: .placeholder)
             Text(comic.title!)
                 .fontWeight(.heavy)
-//                .redacted(reason: .placeholder)
+            //                .redacted(reason: .placeholder)
         }
         .padding(.trailing)
         .padding(.leading)

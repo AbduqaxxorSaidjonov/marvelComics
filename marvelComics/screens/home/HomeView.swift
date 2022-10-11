@@ -13,22 +13,24 @@ struct HomeView: View {
     @ObservedObject var viewModel = HomeViewModel()
     @Binding var tabSelection: Int
     
+    
     var body: some View {
         NavigationView{
             ScrollView{
+                
                 VStack{
-                    ForEach(viewModel.comics){comic in
+                    ForEach(0..<viewModel.comics.count,id: \.self){index in
                         NavigationLink {
-                            ComicInformationView(comicId: comic.id ?? 0)
+                            ComicInformationView(comicId: viewModel.comics[index].id ?? 0)
                         } label: {
-                            ComicCell(comic: comic)
+                                ComicCell(comic: viewModel.comics[index])
+                            }
                         }
-                    }
+
                     if viewModel.comics.count == viewModel.offset && viewModel.comics.count != 0{
                         ProgressView()
-                            .padding(.vertical)
-                            .onAppear {
-                                print("Fetching new data")
+                            .onAppear{
+                                print("Fetching data")
                                 viewModel.getInfoFromServer()
                             }
                     }
@@ -41,7 +43,7 @@ struct HomeView: View {
                             if !viewModel.comics.isEmpty && minY < height{
                                 
                                 DispatchQueue.main.async{
-                                    viewModel.offset =  viewModel.comics.count
+                                    viewModel.offset = viewModel.comics.count
                                 }
                             }
                             return Color.clear
@@ -50,7 +52,7 @@ struct HomeView: View {
                     }
                 }
                 .padding(.vertical)
-                if viewModel.comics.isEmpty{
+                if viewModel.isLoading{
                     ZStack{
                         Color(.systemBackground)
                             .ignoresSafeArea()

@@ -12,39 +12,14 @@ class HomeViewModel: ObservableObject{
     
     @Published var comics = [Comic]()
     @Published var offset: Int = 0
+    @Published var isLoading = true
     
-    func getInfoFromServer (){
-        
-        guard let url = URL(string: AFHttp.server(url: AFHttp.API_COMICS_LIST,offset: offset)) else {return}
-        let session = URLSession.shared
-    
-        session.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                print("ERROR: \(error.localizedDescription)")
-                return
-            }else{
-                
-                guard let data = data, let response = response as? HTTPURLResponse else {
-                    print("ERROR: Couldn't read response object")
-                    return
-                }
-                guard response.statusCode == 200 else {
-                    print("ERROR: Server responded status \(response.statusCode)")
-                    return
-                }
-
-                let decoder = JSONDecoder()
-
-                    let comics = try? decoder.decode(ComicDataWrapper.self, from: data)
-
-                DispatchQueue.main.async {
-                    self.comics.append(contentsOf: (comics?.data?.results) ?? [Comic]())
-                }  
-                
-               
+    func getInfoFromServer(){
+        AFHttp.get(url: AFHttp.API_COMICS_LIST, offset: offset){comics in
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.comics.append(contentsOf: (comics.data?.results) ?? [Comic]())
             }
-            
         }
-        .resume()
     }
 }
