@@ -11,10 +11,11 @@ import Foundation
 class HomeViewModel: ObservableObject{
     
     @Published var comics = [Comic]()
+    @Published var offset: Int = 0
     
     func getInfoFromServer (){
         
-        guard let url = URL(string: AFHttp.server(url: AFHttp.API_COMICS_LIST)) else {return}
+        guard let url = URL(string: AFHttp.server(url: AFHttp.API_COMICS_LIST,offset: offset)) else {return}
         let session = URLSession.shared
     
         session.dataTask(with: url) { (data, response, error) in
@@ -37,7 +38,7 @@ class HomeViewModel: ObservableObject{
                     let comics = try? decoder.decode(ComicDataWrapper.self, from: data)
 
                 DispatchQueue.main.async {
-                    self.comics = (comics?.data?.results) ?? [Comic]()
+                    self.comics.append(contentsOf: (comics?.data?.results) ?? [Comic]())
                 }  
                 
                

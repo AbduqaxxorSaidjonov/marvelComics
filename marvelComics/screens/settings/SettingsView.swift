@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct SettingsScreen: View {
+struct SettingsView: View {
     var body: some View {
         Text("Setting Screen")
     }
 }
 
-struct SettingsScreen_Previews: PreviewProvider {
+struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsScreen()
+        SettingsView()
     }
 }

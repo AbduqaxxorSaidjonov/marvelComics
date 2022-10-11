@@ -13,7 +13,7 @@ struct BaseView: View {
     
     var body: some View {
         TabView(selection: $tabSelection){
-            HomeScreen(tabSelection: $tabSelection)
+            HomeView(tabSelection: $tabSelection)
                 .tabItem{
                 VStack{
                     Image(systemName: "square.grid.2x2")
@@ -21,7 +21,7 @@ struct BaseView: View {
                 }
                 }
                 .tag(0)
-            SettingsScreen()
+            SettingsView()
                 .tabItem {
                     VStack{
                         Image(systemName: "gearshape.fill")

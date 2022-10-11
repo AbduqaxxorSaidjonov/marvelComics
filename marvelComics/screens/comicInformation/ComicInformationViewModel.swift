@@ -7,11 +7,13 @@
 
 import Foundation
 
-class ComicInfoViewModel: ObservableObject{
+class ComicInformationViewModel: ObservableObject{
     
-    func getSingleComic(comicId: String,completion: ((Comic)->Void)? = nil){
+    @Published var comicInfo = Comic()
+    
+    func getSingleComic(comicId: String){
         
-        guard let url = URL(string: AFHttp.server(url: AFHttp.API_COMIC_SINGLE + String(comicId))) else {return}
+        guard let url = URL(string: AFHttp.server(url: AFHttp.API_COMIC_SINGLE + String(comicId), offset: 0)) else {return}
         let session = URLSession.shared
     
         session.dataTask(with: url) { (data, response, error) in
@@ -33,8 +35,9 @@ class ComicInfoViewModel: ObservableObject{
 
                 let comic = try! decoder.decode(ComicDataWrapper.self, from: data)
                
-                completion?(comic.data?.results?.first ?? Comic())
-
+                DispatchQueue.main.async {
+                    self.comicInfo = comic.data?.results?.first ?? Comic()
+                }
             }
             
         }
