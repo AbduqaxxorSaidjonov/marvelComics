@@ -10,23 +10,21 @@ import SDWebImageSwiftUI
 
 struct HomeView: View {
     
-    @ObservedObject var viewModel = HomeViewModel()
+    @StateObject var viewModel = HomeViewModel()
     @Binding var tabSelection: Int
-    
     
     var body: some View {
         NavigationView{
             ScrollView{
-                
                 VStack{
                     ForEach(0..<viewModel.comics.count,id: \.self){index in
                         NavigationLink {
                             ComicInformationView(comicId: viewModel.comics[index].id ?? 0)
                         } label: {
-                                ComicCell(comic: viewModel.comics[index])
-                            }
+                            ComicCell(comic: viewModel.comics[index])
                         }
-
+                    }
+                    
                     if viewModel.comics.count == viewModel.offset && viewModel.comics.count != 0{
                         ProgressView()
                             .onAppear{
@@ -38,7 +36,7 @@ struct HomeView: View {
                         GeometryReader{reader -> Color in
                             
                             let minY = reader.frame(in: .global).minY
-                            let height = UIScreen.height / 1.3
+                            let height = UIScreen.height / 0.1
                             
                             if !viewModel.comics.isEmpty && minY < height{
                                 

@@ -28,7 +28,7 @@ struct ComicDataContainer: Decodable{
     
 }
 
-struct Comic:Decodable{
+struct Comic: Decodable{
     var id: Int?
     var digitalId: Int?
     var title: String?

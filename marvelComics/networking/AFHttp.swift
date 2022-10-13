@@ -15,9 +15,11 @@ private let private_key = "2c71b7811774dff516dada5fef3c6a8cd80aca84"
 class AFHttp{
     
     static let API_COMICS_LIST = "/comics"
-    static let API_COMIC_SINGLE = "/comics/" //id
+    static let API_COMIC_SINGLE = "/comics/" //+id
+    static let API_CHARACTERS_LIST = "/characters"
+    static let API_CHARACTER_SINGLE = "/characters/" //+id
     
-    class func get(url: String,offset: Int,completion: ((ComicDataWrapper)->Void)? = nil){
+    class func get(url: String,offset: Int,completion: ((Data)->Void)? = nil){
         guard let url = URL(string: AFHttp.server(url: url,offset: offset)) else {return}
         let session = URLSession.shared
         
@@ -42,11 +44,7 @@ class AFHttp{
                     return
                 }
                 
-                let decoder = JSONDecoder()
-                
-                let comics = try? decoder.decode(ComicDataWrapper.self, from: data)
-                print(comics)
-                completion?(comics ?? ComicDataWrapper())
+                completion?(data)
             }
             
         }

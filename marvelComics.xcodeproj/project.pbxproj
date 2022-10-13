@@ -16,6 +16,12 @@
 		76799CB128F0887A00BD0CD1 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76799CB028F0887A00BD0CD1 /* Utils.swift */; };
 		768C38EC28EEC0D500B2A3CB /* ComicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768C38EB28EEC0D500B2A3CB /* ComicCell.swift */; };
 		76A1244928ED6E12002851BF /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 76A1244828ED6E12002851BF /* SDWebImageSwiftUI */; };
+		76B38EE428F698B0000E6C1F /* Characters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B38EE328F698B0000E6C1F /* Characters.swift */; };
+		76B38EE728F6A32E000E6C1F /* CharactersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B38EE628F6A32E000E6C1F /* CharactersView.swift */; };
+		76B38EEC28F6A398000E6C1F /* CharactersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B38EEB28F6A398000E6C1F /* CharactersViewModel.swift */; };
+		76B38EEE28F6A3B7000E6C1F /* CharacterInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B38EED28F6A3B7000E6C1F /* CharacterInformationView.swift */; };
+		76B38EF028F6A3C9000E6C1F /* CharacterInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B38EEF28F6A3C9000E6C1F /* CharacterInformationViewModel.swift */; };
+		76B38EF428F6AFE8000E6C1F /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B38EF328F6AFE8000E6C1F /* CharacterCell.swift */; };
 		76C2A39028EB0CC20028D0D3 /* AFHttp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C2A38F28EB0CC20028D0D3 /* AFHttp.swift */; };
 		76D768BA28EAFCA90053D077 /* marvelComicsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D768B928EAFCA90053D077 /* marvelComicsApp.swift */; };
 		76D768BE28EAFCAA0053D077 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76D768BD28EAFCAA0053D077 /* Assets.xcassets */; };
@@ -57,6 +63,12 @@
 		76799CB028F0887A00BD0CD1 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		768C38EB28EEC0D500B2A3CB /* ComicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicCell.swift; sourceTree = "<group>"; };
 		768C38ED28EF09E900B2A3CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		76B38EE328F698B0000E6C1F /* Characters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Characters.swift; sourceTree = "<group>"; };
+		76B38EE628F6A32E000E6C1F /* CharactersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersView.swift; sourceTree = "<group>"; };
+		76B38EEB28F6A398000E6C1F /* CharactersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewModel.swift; sourceTree = "<group>"; };
+		76B38EED28F6A3B7000E6C1F /* CharacterInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInformationView.swift; sourceTree = "<group>"; };
+		76B38EEF28F6A3C9000E6C1F /* CharacterInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInformationViewModel.swift; sourceTree = "<group>"; };
+		76B38EF328F6AFE8000E6C1F /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
 		76C2A38F28EB0CC20028D0D3 /* AFHttp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFHttp.swift; sourceTree = "<group>"; };
 		76D768B628EAFCA90053D077 /* marvelComics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = marvelComics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76D768B928EAFCA90053D077 /* marvelComicsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = marvelComicsApp.swift; sourceTree = "<group>"; };
@@ -122,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				7660601528EBFB5100B919BD /* Comic.swift */,
+				76B38EE328F698B0000E6C1F /* Characters.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -139,8 +152,27 @@
 			isa = PBXGroup;
 			children = (
 				768C38EB28EEC0D500B2A3CB /* ComicCell.swift */,
+				76B38EF328F6AFE8000E6C1F /* CharacterCell.swift */,
 			);
 			path = cell;
+			sourceTree = "<group>";
+		};
+		76B38EE528F6A2FA000E6C1F /* characters */ = {
+			isa = PBXGroup;
+			children = (
+				76B38EE628F6A32E000E6C1F /* CharactersView.swift */,
+				76B38EEB28F6A398000E6C1F /* CharactersViewModel.swift */,
+			);
+			path = characters;
+			sourceTree = "<group>";
+		};
+		76B38EEA28F6A35B000E6C1F /* characterInformation */ = {
+			isa = PBXGroup;
+			children = (
+				76B38EED28F6A3B7000E6C1F /* CharacterInformationView.swift */,
+				76B38EEF28F6A3C9000E6C1F /* CharacterInformationViewModel.swift */,
+			);
+			path = characterInformation;
 			sourceTree = "<group>";
 		};
 		76C2A38E28EB0C230028D0D3 /* networking */ = {
@@ -229,6 +261,8 @@
 				760EB01628EFC0D6007FF1C7 /* Launch Screen.storyboard */,
 				7660600E28EBF9BA00B919BD /* home */,
 				76799CAB28EFFC9400BD0CD1 /* comicInformation */,
+				76B38EE528F6A2FA000E6C1F /* characters */,
+				76B38EEA28F6A35B000E6C1F /* characterInformation */,
 				7660601128EBFA8D00B919BD /* settings */,
 			);
 			path = screens;
@@ -375,12 +409,18 @@
 				76D768C328EAFCAA0053D077 /* Persistence.swift in Sources */,
 				76799CAF28EFFD7E00BD0CD1 /* ComicInformationViewModel.swift in Sources */,
 				76799CB128F0887A00BD0CD1 /* Utils.swift in Sources */,
+				76B38EE428F698B0000E6C1F /* Characters.swift in Sources */,
+				76B38EF028F6A3C9000E6C1F /* CharacterInformationViewModel.swift in Sources */,
 				76D768ED28EAFD000053D077 /* HomeView.swift in Sources */,
+				76B38EEC28F6A398000E6C1F /* CharactersViewModel.swift in Sources */,
+				76B38EEE28F6A3B7000E6C1F /* CharacterInformationView.swift in Sources */,
 				76D768C628EAFCAA0053D077 /* marvelComics.xcdatamodeld in Sources */,
 				76D768EF28EAFD1E0053D077 /* SettingsView.swift in Sources */,
 				76D768BA28EAFCA90053D077 /* marvelComicsApp.swift in Sources */,
 				7660601028EBFA7C00B919BD /* HomeViewModel.swift in Sources */,
+				76B38EE728F6A32E000E6C1F /* CharactersView.swift in Sources */,
 				7660601628EBFB5100B919BD /* Comic.swift in Sources */,
+				76B38EF428F6AFE8000E6C1F /* CharacterCell.swift in Sources */,
 				768C38EC28EEC0D500B2A3CB /* ComicCell.swift in Sources */,
 				76C2A39028EB0CC20028D0D3 /* AFHttp.swift in Sources */,
 				76799CAD28EFFD0500BD0CD1 /* ComicInformationView.swift in Sources */,

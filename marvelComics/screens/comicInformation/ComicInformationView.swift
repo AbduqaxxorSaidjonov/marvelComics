@@ -27,7 +27,6 @@ struct ComicInformationView: View {
                         WebImage(url: URL(string: "\(self.viewModel.comicInfo.thumbnail!.path!).\(self.viewModel.comicInfo.thumbnail!.extension!)"))
                             .resizable()
                             .scaledToFill()
-                            .frame(width: UIScreen.width / 2, height: UIScreen.height / 2)
                     }
                     VStack(alignment: .leading){
                         if !(viewModel.comicInfo.dates?.isEmpty ?? true){
@@ -61,7 +60,20 @@ struct ComicInformationView: View {
                         
                     }
                     .padding(.all , 10)
+                    if !viewModel.isLoading{
+                    NavigationLink {
+                        CharactersView(comicId: comicId)
+                    } label: {
+                        Text("Comic's Characters")
+                            .foregroundColor(Color.white)
+                            .font(Font.system(size: 20))
+                            .padding(.vertical , 10)
+                            .frame(width: UIScreen.width / 1.5)
+                            .background(RoundedRectangle(cornerRadius: 10).foregroundColor(Color.red))
+                    }
                 }
+                }
+                .padding(.bottom)
                 .frame(width: UIScreen.width)
                 .frame(maxHeight: .infinity)
                 if viewModel.isLoading{
@@ -77,6 +89,7 @@ struct ComicInformationView: View {
                 }
             }
         }
+        .listStyle(PlainListStyle())
         .navigationBarTitle("Comic's information",displayMode: .inline)
         .navigationBarItems(leading: Button(action: {
             self.presentation.wrappedValue.dismiss()

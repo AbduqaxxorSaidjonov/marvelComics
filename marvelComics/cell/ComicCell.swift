@@ -22,8 +22,7 @@ struct ComicCell: View {
                 .fontWeight(.heavy)
             //                .redacted(reason: .placeholder)
         }
-        .padding(.trailing)
-        .padding(.leading)
+        .padding(.horizontal)
         .padding(.bottom)
     }
 }
