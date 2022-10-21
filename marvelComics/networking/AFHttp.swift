@@ -20,31 +20,37 @@ class AFHttp{
     static let API_CHARACTER_SINGLE = "/characters/" //+id
     
     class func get(url: String,offset: Int,completion: ((Data)->Void)? = nil){
+        
         guard let url = URL(string: AFHttp.server(url: url,offset: offset)) else {return}
+       
         let session = URLSession.shared
         
         session.dataTask(with: url) { (data, response, error) in
+            
+            print(url.absoluteString)
+            
             if let error = error {
                 print("ERROR: \(error.localizedDescription)")
                 return
             }else{
                 
-                print(url)
+                let jsonData = data?.prettyPrintedJSONString!
+                print("\n")
+                print(jsonData!)
                 
                 guard let data = data, let response = response as? HTTPURLResponse else {
                     print("ERROR: Couldn't read response object")
                     return
                 }
                 
-                print(response)
-                print(data)
-                
                 guard response.statusCode == 200 else {
                     print("ERROR: Server responded status \(response.statusCode)")
                     return
                 }
                 
-                completion?(data)
+                DispatchQueue.main.async {
+                    completion?(data)
+                }
             }
             
         }
@@ -54,8 +60,14 @@ class AFHttp{
     class func server(url: String,offset: Int) -> String{
         let ts = String(Date().timeIntervalSince1970)
         let hash = MD5(data: "\(ts)\(private_key)\(public_key)")
-        let request_url = base_url + url + "?limit=20&offset=\(offset)&ts=" + ts + "&apikey=" + public_key + "&hash=" + hash
-        return  request_url
+        
+        let queryItems = [URLQueryItem(name: "limit", value: "20"), URLQueryItem(name: "offset", value: String(offset)), URLQueryItem(name: "ts", value: ts), URLQueryItem(name: "apikey", value: public_key), URLQueryItem(name: "hash", value: hash)]
+        
+        var urlComps = URLComponents(string: base_url + url)!
+        
+        urlComps.queryItems = queryItems
+        let request_url = urlComps.url!
+        return request_url.absoluteString
     }
     
     class func MD5(data: String) -> String{

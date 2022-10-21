@@ -10,7 +10,7 @@ import SDWebImageSwiftUI
 
 struct ComicInformationView: View {
     
-    @ObservedObject var viewModel = ComicInformationViewModel()
+    @StateObject var viewModel = ComicInformationViewModel()
     var comicId: Int
     @Environment(\.presentationMode) var presentation
     
@@ -74,8 +74,7 @@ struct ComicInformationView: View {
                 }
                 }
                 .padding(.bottom)
-                .frame(width: UIScreen.width)
-                .frame(maxHeight: .infinity)
+               
                 if viewModel.isLoading{
                     ZStack{
                         Color(.systemBackground)
@@ -90,16 +89,17 @@ struct ComicInformationView: View {
             }
         }
         .listStyle(PlainListStyle())
-        .navigationBarTitle("Comic's information",displayMode: .inline)
+        .navigationBarTitle("Comic's Information",displayMode: .inline)
         .navigationBarItems(leading: Button(action: {
             self.presentation.wrappedValue.dismiss()
         }, label: {
             Image(systemName: "chevron.backward")
         }))
+        .navigationBarBackButtonHidden(true)
         .onAppear{
             viewModel.getSingleComic(comicId: String(self.comicId))
         }
-        .navigationBarBackButtonHidden(true)
+        
     }
 }
 

@@ -21,7 +21,7 @@ struct HomeView: View {
                         NavigationLink {
                             ComicInformationView(comicId: viewModel.comics[index].id ?? 0)
                         } label: {
-                            ComicCell(comic: viewModel.comics[index])
+                                ComicCell(comic: viewModel.comics[index])
                         }
                     }
                     

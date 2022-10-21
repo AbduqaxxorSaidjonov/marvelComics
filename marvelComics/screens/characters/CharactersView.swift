@@ -79,12 +79,13 @@ struct CharactersView: View {
             }, label: {
                 Image(systemName: "chevron.backward")
             }))
+            .navigationBarBackButtonHidden(true)
             .onAppear{
                 if viewModel.characters.isEmpty{
                     viewModel.getCharactersList(comicId: String(comicId))
                 }
             }
-            .navigationBarBackButtonHidden(true)
+            
     }
 }
 

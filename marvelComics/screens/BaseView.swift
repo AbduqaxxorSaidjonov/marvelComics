@@ -21,6 +21,7 @@ struct BaseView: View {
                 }
                 }
                 .tag(0)
+                
             SettingsView()
                 .tabItem {
                     VStack{

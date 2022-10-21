@@ -87,7 +87,7 @@ struct CharacterInformationView: View {
                             Text("Description: ")
                                 .fontWeight(.semibold)
                                 .foregroundColor(.red) +
-                            Text("Character empty")
+                            Text("Description empty")
                         }else{
                             Text("Description: ")
                                 .fontWeight(.semibold)
@@ -98,8 +98,7 @@ struct CharacterInformationView: View {
                     .padding(.all , 10)
                 }
                 .padding(.bottom)
-                .frame(width: UIScreen.width)
-                .frame(maxHeight: .infinity)
+ 
             }
         }
         .navigationBarTitle("Comic's information",displayMode: .inline)

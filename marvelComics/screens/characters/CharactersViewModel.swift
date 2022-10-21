@@ -15,12 +15,10 @@ class CharactersViewModel: ObservableObject{
     
     func getCharactersList(comicId: String){
         AFHttp.get(url: AFHttp.API_COMIC_SINGLE + String(comicId) + AFHttp.API_CHARACTERS_LIST, offset: 0){data in
-            DispatchQueue.main.async {
                 let characters = try? JSONDecoder().decode(CharacterDataWrapper.self, from: data)
-                print(characters)
                 self.isLoading = false
                 self.characters.append(contentsOf: (characters?.data?.results) ?? [Character]())
-            }
+            
         }
     }
 }
