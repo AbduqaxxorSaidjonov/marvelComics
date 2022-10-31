@@ -9,8 +9,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct HomeView: View {
-     
-    @StateObject var network = NetworkMonitor()
+    
     @StateObject var viewModel = HomeViewModel()
     @Binding var tabSelection: Int
     @FetchRequest(entity: ComicsEntity.entity(), sortDescriptors: []) var comics: FetchedResults<ComicsEntity>
@@ -52,14 +51,24 @@ struct HomeView: View {
                     }
                 }
                 .padding(.vertical)
-                
+                if viewModel.isLoading{
+                    ZStack{
+                        Color(.systemBackground)
+                            .ignoresSafeArea()
+                            .opacity(0.8)
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.red))
+                            .scaleEffect(2)
+                    }
+                    .padding(.vertical ,UIScreen.height / 3)
+                }
             }
             .listStyle(PlainListStyle())
             .navigationBarTitle("Marvel Comics", displayMode: .inline)
         }
         .onAppear{
             if viewModel.comics.isEmpty{
-                if network.isConnected{
+                if NetworkMonitor.shared.isConnected{
                     print("Comics Deleted")
                     PersistenceController.shared.deleteDataOf()
                 }

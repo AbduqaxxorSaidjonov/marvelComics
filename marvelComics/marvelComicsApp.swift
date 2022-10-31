@@ -12,6 +12,7 @@ struct marvelComicsApp: App {
     let persistenceController = PersistenceController.shared
     
     init(){
+        NetworkMonitor.shared.startMonitoring()
        let navBarAppearance = UINavigationBarAppearance()
         let tabBarAppearance = UITabBarAppearance()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.red]
