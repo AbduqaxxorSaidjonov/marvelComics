@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		760EB01728EFC0D6007FF1C7 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 760EB01628EFC0D6007FF1C7 /* Launch Screen.storyboard */; };
+		763216F7290FA9AD00EA6E11 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763216F6290FA9AD00EA6E11 /* NetworkMonitor.swift */; };
 		7660601028EBFA7C00B919BD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660600F28EBFA7C00B919BD /* HomeViewModel.swift */; };
 		7660601328EBFAA700B919BD /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660601228EBFAA700B919BD /* SettingsViewModel.swift */; };
 		7660601628EBFB5100B919BD /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660601528EBFB5100B919BD /* Comic.swift */; };
@@ -55,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		760EB01628EFC0D6007FF1C7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		763216F6290FA9AD00EA6E11 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		7660600F28EBFA7C00B919BD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		7660601228EBFAA700B919BD /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		7660601528EBFB5100B919BD /* Comic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comic.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				76D768C228EAFCAA0053D077 /* Persistence.swift */,
 				76D768BD28EAFCAA0053D077 /* Assets.xcassets */,
 				76799CB028F0887A00BD0CD1 /* Utils.swift */,
+				763216F6290FA9AD00EA6E11 /* NetworkMonitor.swift */,
 			);
 			path = apputils;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				76D768EF28EAFD1E0053D077 /* SettingsView.swift in Sources */,
 				76D768BA28EAFCA90053D077 /* marvelComicsApp.swift in Sources */,
 				7660601028EBFA7C00B919BD /* HomeViewModel.swift in Sources */,
+				763216F7290FA9AD00EA6E11 /* NetworkMonitor.swift in Sources */,
 				76B38EE728F6A32E000E6C1F /* CharactersView.swift in Sources */,
 				7660601628EBFB5100B919BD /* Comic.swift in Sources */,
 				76B38EF428F6AFE8000E6C1F /* CharacterCell.swift in Sources */,
@@ -587,6 +591,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = marvelComics/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Marvel Comics";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -617,6 +622,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = marvelComics/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Marvel Comics";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

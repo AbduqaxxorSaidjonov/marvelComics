@@ -10,25 +10,28 @@ import SDWebImageSwiftUI
 
 struct ComicCell: View {
     
-    var comic: Comic
+    var comic: ComicsEntity
     
     var body: some View {
         VStack(alignment: .leading){
-            WebImage(url: URL(string: "\(self.comic.thumbnail!.path!).\(self.comic.thumbnail!.extension!)"))
+            WebImage(url: comic.comicsImgUrl)
                 .resizable()
                 .scaledToFill()
             //     .redacted(reason: .placeholder)
-            Text(comic.title!)
+            Text(comic.comicsTitle ?? "Optional")
                 .fontWeight(.heavy)
             //                .redacted(reason: .placeholder)
         }
         .padding(.horizontal)
         .padding(.bottom)
+        .onAppear{
+            print(comic.comicsId)
+        }
     }
 }
 
 struct ComicCell_Previews: PreviewProvider {
     static var previews: some View {
-        ComicCell(comic: Comic())
+        ComicCell(comic: ComicsEntity())
     }
 }

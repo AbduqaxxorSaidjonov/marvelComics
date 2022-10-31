@@ -13,12 +13,10 @@ class ComicInformationViewModel: ObservableObject{
     @Published var isLoading = true
     
     func getSingleComic(comicId: String){
-        AFHttp.get(url: AFHttp.API_COMIC_SINGLE + String(comicId), offset: 0){data in
-            
-                let comic = try? JSONDecoder().decode(ComicDataWrapper.self, from: data)
-                self.isLoading = false
-                self.comicInfo = comic?.data?.results?.first ?? Comic()
-
+        AFHttp.get(url: AFHttp.API_COMIC_SINGLE + comicId, offset: 0){data in
+            let comic = try? JSONDecoder().decode(ComicDataWrapper.self, from: data)
+            self.isLoading = false
+            self.comicInfo = comic?.data?.results?.first ?? Comic()
         }
     }
 }

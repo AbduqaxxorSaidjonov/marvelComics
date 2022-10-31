@@ -11,34 +11,29 @@ import SDWebImageSwiftUI
 struct ComicInformationView: View {
     
     @StateObject var viewModel = ComicInformationViewModel()
-    var comicId: Int
+    var comicId: String
     @Environment(\.presentationMode) var presentation
     
     var body: some View {
         ScrollView{
             ZStack{
                 VStack(alignment: .center){
-                    Text(viewModel.comicInfo.title ?? "")
-                        .font(.system(size: 20))
-                        .fontWeight(.bold)
-                        .padding(.all , 10)
-                    
-                    if viewModel.comicInfo.thumbnail?.path != nil && viewModel.comicInfo.thumbnail?.extension != nil{
-                        WebImage(url: URL(string: "\(self.viewModel.comicInfo.thumbnail!.path!).\(self.viewModel.comicInfo.thumbnail!.extension!)"))
-                            .resizable()
-                            .scaledToFill()
-                    }
+//                    Text(comic.comicsTitle ?? "")
+//                        .font(.system(size: 20))
+//                        .fontWeight(.bold)
+//                        .padding(.all , 10)
+//
+//                    if comic.comicsImgUrl != nil{
+//                        WebImage(url: comic.comicsImgUrl)
+//                            .resizable()
+//                            .scaledToFill()
+//                    }
                     VStack(alignment: .leading){
-                        if !(viewModel.comicInfo.dates?.isEmpty ?? true){
-                            ForEach(0..<(viewModel.comicInfo.dates?.count ?? 1)){ index in
-                                if viewModel.comicInfo.dates?[index].type ?? "" ==  "onsaleDate"{
-                                    HStack{
-                                        Text("Published date: ").fontWeight(.semibold)
-                                        Text(Utils.dateFormatter(date: viewModel.comicInfo.dates?[index].date ?? "None Date"))
-                                    }
-                                }
+                            HStack{
+                                Text("Published date: ").fontWeight(.semibold)
+                                //Text(comic.dates ?? "")
                             }
-                        }
+                                
                         if !(viewModel.comicInfo.creators?.items?.isEmpty ?? true){
                             ForEach(0..<(viewModel.comicInfo.creators?.items?.count ?? 1)){ index in
                                 HStack{
@@ -62,7 +57,7 @@ struct ComicInformationView: View {
                     .padding(.all , 10)
                     if !viewModel.isLoading{
                     NavigationLink {
-                        CharactersView(comicId: comicId)
+                        //CharactersView(comicId: comicId)
                     } label: {
                         Text("Comic's Characters")
                             .foregroundColor(Color.white)
@@ -75,17 +70,17 @@ struct ComicInformationView: View {
                 }
                 .padding(.bottom)
                
-                if viewModel.isLoading{
-                    ZStack{
-                        Color(.systemBackground)
-                            .ignoresSafeArea()
-                            .opacity(0.8)
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: Color.red))
-                            .scaleEffect(2)
-                    }
-                    .padding(.vertical ,UIScreen.height / 3)
-                }
+//                if viewModel.isLoading{
+//                    ZStack{
+//                        Color(.systemBackground)
+//                            .ignoresSafeArea()
+//                            .opacity(0.8)
+//                        ProgressView()
+//                            .progressViewStyle(CircularProgressViewStyle(tint: Color.red))
+//                            .scaleEffect(2)
+//                    }
+//                    .padding(.vertical ,UIScreen.height / 3)
+//                }
             }
         }
         .listStyle(PlainListStyle())
@@ -97,14 +92,13 @@ struct ComicInformationView: View {
         }))
         .navigationBarBackButtonHidden(true)
         .onAppear{
-            viewModel.getSingleComic(comicId: String(self.comicId))
+            viewModel.getSingleComic(comicId: comicId)
         }
-        
     }
 }
 
 struct ComicInformationView_Previews: PreviewProvider {
     static var previews: some View {
-        ComicInformationView(comicId: 1)
+        ComicInformationView(comicId: "")
     }
 }

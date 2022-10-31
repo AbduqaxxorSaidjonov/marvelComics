@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 class HomeViewModel: ObservableObject{
     
@@ -14,10 +15,11 @@ class HomeViewModel: ObservableObject{
     @Published var isLoading = true
     
     func getInfoFromServer(){
-            AFHttp.get(url: AFHttp.API_COMICS_LIST, offset: offset){data in
-                let comics = try? JSONDecoder().decode(ComicDataWrapper.self, from: data)
-                self.isLoading = false
-                self.comics.append(contentsOf: (comics?.data?.results) ?? [Comic]())
-            }
+        AFHttp.get(url: AFHttp.API_COMICS_LIST, offset: offset){data in
+            let comics = try? JSONDecoder().decode(ComicDataWrapper.self, from: data)
+            self.isLoading = false
+            self.comics.append(contentsOf: (comics?.data?.results) ?? [Comic]())
+            PersistenceController.shared.saveDataOf(comics: comics?.data?.results ?? [Comic]())
+        }
     }
 }

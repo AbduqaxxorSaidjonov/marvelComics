@@ -9,23 +9,25 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct HomeView: View {
-    
+     
+    @StateObject var network = NetworkMonitor()
     @StateObject var viewModel = HomeViewModel()
     @Binding var tabSelection: Int
+    @FetchRequest(entity: ComicsEntity.entity(), sortDescriptors: []) var comics: FetchedResults<ComicsEntity>
     
     var body: some View {
         NavigationView{
             ScrollView{
                 VStack{
-                    ForEach(0..<viewModel.comics.count,id: \.self){index in
+                    ForEach(comics, id: \.self){comic in
                         NavigationLink {
-                            ComicInformationView(comicId: viewModel.comics[index].id ?? 0)
+                            ComicInformationView(comicId: comic.comicsId ?? "")
                         } label: {
-                                ComicCell(comic: viewModel.comics[index])
+                            ComicCell(comic: comic)
                         }
                     }
                     
-                    if viewModel.comics.count == viewModel.offset && viewModel.comics.count != 0{
+                    if viewModel.comics.count == viewModel.offset && !viewModel.comics.isEmpty{
                         ProgressView()
                             .onAppear{
                                 print("Fetching data")
@@ -50,17 +52,6 @@ struct HomeView: View {
                     }
                 }
                 .padding(.vertical)
-                if viewModel.isLoading{
-                    ZStack{
-                        Color(.systemBackground)
-                            .ignoresSafeArea()
-                            .opacity(0.8)
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: Color.red))
-                            .scaleEffect(2)
-                    }
-                    .padding(.vertical ,UIScreen.height / 3)
-                }
                 
             }
             .listStyle(PlainListStyle())
@@ -68,10 +59,13 @@ struct HomeView: View {
         }
         .onAppear{
             if viewModel.comics.isEmpty{
+                if network.isConnected{
+                    print("Comics Deleted")
+                    PersistenceController.shared.deleteDataOf()
+                }
                 viewModel.getInfoFromServer()
             }
         }
-        
     }
 }
 
