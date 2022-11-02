@@ -20,7 +20,7 @@ struct HomeView: View {
                 VStack{
                     ForEach(comics, id: \.self){comic in
                         NavigationLink {
-                            ComicInformationView(comicId: comic.comicsId ?? "")
+                            ComicInformationView(comic: comic)
                         } label: {
                             ComicCell(comic: comic)
                         }
@@ -69,7 +69,6 @@ struct HomeView: View {
         .onAppear{
             if viewModel.comics.isEmpty{
                 if NetworkMonitor.shared.isConnected{
-                    print("Comics Deleted")
                     PersistenceController.shared.deleteDataOf()
                 }
                 viewModel.getInfoFromServer()

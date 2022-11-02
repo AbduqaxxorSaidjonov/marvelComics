@@ -211,6 +211,7 @@
 				768C38ED28EF09E900B2A3CB /* Info.plist */,
 				76D768E928EAFCD30053D077 /* screens */,
 				76C2A38E28EB0C230028D0D3 /* networking */,
+				76E671882910DEF400643FED /* CoreData */,
 				7660601428EBFB2200B919BD /* model */,
 				768C38EA28EEC0BF00B2A3CB /* cell */,
 				76D768E828EAFCC00053D077 /* apputils */,
@@ -249,7 +250,6 @@
 		76D768E828EAFCC00053D077 /* apputils */ = {
 			isa = PBXGroup;
 			children = (
-				76D768C228EAFCAA0053D077 /* Persistence.swift */,
 				76D768BD28EAFCAA0053D077 /* Assets.xcassets */,
 				76799CB028F0887A00BD0CD1 /* Utils.swift */,
 				763216F6290FA9AD00EA6E11 /* NetworkMonitor.swift */,
@@ -269,6 +269,14 @@
 				7660601128EBFA8D00B919BD /* settings */,
 			);
 			path = screens;
+			sourceTree = "<group>";
+		};
+		76E671882910DEF400643FED /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				76D768C228EAFCAA0053D077 /* Persistence.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

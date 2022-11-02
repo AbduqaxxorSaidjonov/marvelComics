@@ -24,9 +24,6 @@ struct ComicCell: View {
         }
         .padding(.horizontal)
         .padding(.bottom)
-        .onAppear{
-            print(comic.comicsId)
-        }
     }
 }
 

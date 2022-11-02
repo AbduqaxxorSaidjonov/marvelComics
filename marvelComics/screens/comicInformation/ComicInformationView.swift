@@ -11,53 +11,51 @@ import SDWebImageSwiftUI
 struct ComicInformationView: View {
     
     @StateObject var viewModel = ComicInformationViewModel()
-    var comicId: String
+    var comic: ComicsEntity
+    @FetchRequest(entity: Creators.entity(), sortDescriptors: []) var cretorInfo: FetchedResults<Creators>
     @Environment(\.presentationMode) var presentation
+    @Environment(\.managedObjectContext) var moc
     
     var body: some View {
         ScrollView{
             ZStack{
                 VStack(alignment: .center){
-//                    Text(comic.comicsTitle ?? "")
-//                        .font(.system(size: 20))
-//                        .fontWeight(.bold)
-//                        .padding(.all , 10)
-//
-//                    if comic.comicsImgUrl != nil{
-//                        WebImage(url: comic.comicsImgUrl)
-//                            .resizable()
-//                            .scaledToFill()
-//                    }
+                    Text(comic.comicsTitle ?? "")
+                        .font(.system(size: 20))
+                        .fontWeight(.bold)
+                        .padding(.all , 10)
+                    
+                    if comic.comicsImgUrl != nil{
+                        WebImage(url: comic.comicsImgUrl)
+                            .resizable()
+                            .scaledToFill()
+                    }
                     VStack(alignment: .leading){
-                            HStack{
-                                Text("Published date: ").fontWeight(.semibold)
-                                //Text(comic.dates ?? "")
-                            }
-                                
-                        if !(viewModel.comicInfo.creators?.items?.isEmpty ?? true){
-                            ForEach(0..<(viewModel.comicInfo.creators?.items?.count ?? 1)){ index in
+                        HStack{
+                            Text("Published date: ").fontWeight(.semibold)
+                            Text(Utils.dateFormatter(date: comic.date ?? "Published date can't find"))
+                        }
+                        .padding(.top ,5)
+                      
+                        ForEach(cretorInfo, id: \.self){creator in
+                            if comic.id == creator.id{
                                 HStack{
-                                    Text("\((viewModel.comicInfo.creators?.items?[index].role ?? "").uppercased()): ").fontWeight(.semibold)
-                                    Text(" \(viewModel.comicInfo.creators?.items?[index].name ?? "")")
+                                    Text("\((creator.role ?? "").uppercased()): ")
+                                        .fontWeight(.semibold)
+                                    Text(" \(creator.name ?? "")")
                                 }
-                                .padding(.top ,5)
+                                .padding(.top , 5)
                             }
                         }
-                        if !(viewModel.comicInfo.textObjects?.isEmpty ?? true){
-                            ForEach(0..<(viewModel.comicInfo.textObjects?.count ?? 1)){ index in
-                                HStack{
-                                    Text("Description: ").fontWeight(.semibold) +
-                                    Text(viewModel.comicInfo.textObjects?[index].text ?? "No Description")
-                                }
-                                .padding(.top,5)
-                            }
+                        HStack{
+                            Text("Description: ").fontWeight(.semibold) +
+                            Text(comic.comicsDescription ?? "No description")
                         }
-                        
+                        .padding(.top,5)
                     }
                     .padding(.all , 10)
-                    if !viewModel.isLoading{
                     NavigationLink {
-                        //CharactersView(comicId: comicId)
+                        CharactersView(comicId: Int(comic.id ?? "0") ?? 0)
                     } label: {
                         Text("Comic's Characters")
                             .foregroundColor(Color.white)
@@ -67,20 +65,7 @@ struct ComicInformationView: View {
                             .background(RoundedRectangle(cornerRadius: 10).foregroundColor(Color.red))
                     }
                 }
-                }
                 .padding(.bottom)
-               
-//                if viewModel.isLoading{
-//                    ZStack{
-//                        Color(.systemBackground)
-//                            .ignoresSafeArea()
-//                            .opacity(0.8)
-//                        ProgressView()
-//                            .progressViewStyle(CircularProgressViewStyle(tint: Color.red))
-//                            .scaleEffect(2)
-//                    }
-//                    .padding(.vertical ,UIScreen.height / 3)
-//                }
             }
         }
         .listStyle(PlainListStyle())
@@ -92,13 +77,13 @@ struct ComicInformationView: View {
         }))
         .navigationBarBackButtonHidden(true)
         .onAppear{
-            viewModel.getSingleComic(comicId: comicId)
+            viewModel.getSingleComic(comicId: comic.id ?? "0", context: moc)
         }
     }
 }
 
 struct ComicInformationView_Previews: PreviewProvider {
     static var previews: some View {
-        ComicInformationView(comicId: "")
+        ComicInformationView(comic: ComicsEntity())
     }
 }

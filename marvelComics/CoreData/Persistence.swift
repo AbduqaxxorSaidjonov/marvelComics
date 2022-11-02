@@ -10,15 +10,10 @@ import CoreData
 struct PersistenceController {
     static let shared = PersistenceController()
     
-    private let fetchRequest = NSFetchRequest<ComicsEntity>(entityName: "ComicsEntity")
-    
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-        }
+        
         do {
             try viewContext.save()
         } catch {
@@ -73,11 +68,17 @@ struct PersistenceController {
             context.perform {
                 for comic in comics {
                     let comicsEntity = ComicsEntity(context: context)
-                    comicsEntity.id = UUID()
-                    comicsEntity.comicsId = String(comic.id ?? 0)
+                    comicsEntity.id = String(comic.id ?? 0)
                     comicsEntity.comicsTitle = comic.title
                     comicsEntity.comicsImgUrl = URL(string: "\(comic.thumbnail!.path!).\(comic.thumbnail!.extension!)")
-                    comicsEntity.dates = comic.dates?.first?.date
+                    
+                    for date in comic.dates ?? [ComicDate](){
+                        if date.type == "onsaleDate"{
+                            comicsEntity.date = date.date
+                            comicsEntity.dateType = date.type
+                        }
+                    }
+                    comicsEntity.comicsDescription = comic.textObjects?.first?.text
                 }
                 do{
                     try context.save()
@@ -88,9 +89,13 @@ struct PersistenceController {
         }
     
     private func deleteObjectFromCoreData(context: NSManagedObjectContext){
+        let fetchRequestComics = NSFetchRequest<ComicsEntity>(entityName: "ComicsEntity")
+        let fetchRequestCreators = NSFetchRequest<Creators>(entityName: "Creators")
         do{
-            let objects = try context.fetch(fetchRequest)
-            _ = objects.map({context.delete($0)})
+            let deleteComics = try context.fetch(fetchRequestComics)
+            let deleteCreators = try context.fetch(fetchRequestCreators)
+            _ = deleteComics.map({context.delete($0)})
+            _ = deleteCreators.map({context.delete($0)})
             try context.save()
         }catch{
             print("Deleting error: \(error)")
