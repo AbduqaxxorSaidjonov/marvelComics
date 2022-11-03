@@ -2,15 +2,17 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="marvelComics">
     <entity name="ComicsEntity" representedClassName="ComicsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="comicsDescription" optional="YES" attributeType="String"/>
-        <attribute name="comicsImgUrl" optional="YES" attributeType="URI"/>
-        <attribute name="comicsTitle" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="dateType" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="URI"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Creators" representedClassName="Creators" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="URI"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="role" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
 </model>

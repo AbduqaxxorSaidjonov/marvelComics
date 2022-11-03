@@ -20,13 +20,13 @@ struct ComicInformationView: View {
         ScrollView{
             ZStack{
                 VStack(alignment: .center){
-                    Text(comic.comicsTitle ?? "")
+                    Text(comic.title ?? "")
                         .font(.system(size: 20))
                         .fontWeight(.bold)
                         .padding(.all , 10)
                     
-                    if comic.comicsImgUrl != nil{
-                        WebImage(url: comic.comicsImgUrl)
+                    if comic.image != nil{
+                        WebImage(url: comic.image)
                             .resizable()
                             .scaledToFill()
                     }

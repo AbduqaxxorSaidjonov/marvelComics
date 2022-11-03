@@ -69,8 +69,8 @@ struct PersistenceController {
                 for comic in comics {
                     let comicsEntity = ComicsEntity(context: context)
                     comicsEntity.id = String(comic.id ?? 0)
-                    comicsEntity.comicsTitle = comic.title
-                    comicsEntity.comicsImgUrl = URL(string: "\(comic.thumbnail!.path!).\(comic.thumbnail!.extension!)")
+                    comicsEntity.title = comic.title
+                    comicsEntity.image = URL(string: "\(comic.thumbnail!.path!).\(comic.thumbnail!.extension!)")
                     
                     for date in comic.dates ?? [ComicDate](){
                         if date.type == "onsaleDate"{

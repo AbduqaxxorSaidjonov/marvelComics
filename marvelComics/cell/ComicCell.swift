@@ -14,11 +14,11 @@ struct ComicCell: View {
     
     var body: some View {
         VStack(alignment: .leading){
-            WebImage(url: comic.comicsImgUrl)
+            WebImage(url: comic.image)
                 .resizable()
                 .scaledToFill()
             //     .redacted(reason: .placeholder)
-            Text(comic.comicsTitle ?? "Optional")
+            Text(comic.title ?? "Optional")
                 .fontWeight(.heavy)
             //                .redacted(reason: .placeholder)
         }
