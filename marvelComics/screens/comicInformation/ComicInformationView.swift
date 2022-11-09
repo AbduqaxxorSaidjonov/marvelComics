@@ -14,11 +14,9 @@ struct ComicInformationView: View {
     var comic: ComicsEntity
     @FetchRequest(entity: Creators.entity(), sortDescriptors: []) var cretorInfo: FetchedResults<Creators>
     @Environment(\.presentationMode) var presentation
-    @Environment(\.managedObjectContext) var moc
     
     var body: some View {
         ScrollView{
-            ZStack{
                 VStack(alignment: .center){
                     Text(comic.title ?? "")
                         .font(.system(size: 20))
@@ -36,7 +34,7 @@ struct ComicInformationView: View {
                             Text(Utils.dateFormatter(date: comic.date ?? "Published date can't find"))
                         }
                         .padding(.top ,5)
-                      
+                        
                         ForEach(cretorInfo, id: \.self){creator in
                             if comic.id == creator.id{
                                 HStack{
@@ -66,7 +64,6 @@ struct ComicInformationView: View {
                     }
                 }
                 .padding(.bottom)
-            }
         }
         .listStyle(PlainListStyle())
         .navigationBarTitle("Comic's Information",displayMode: .inline)
@@ -77,7 +74,9 @@ struct ComicInformationView: View {
         }))
         .navigationBarBackButtonHidden(true)
         .onAppear{
-            viewModel.getSingleComic(comicId: comic.id ?? "0", context: moc)
+            if viewModel.comicInfo.isEmpty{
+                viewModel.getSingleComic(comicId: comic.id ?? "0")
+            }
         }
     }
 }

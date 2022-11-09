@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="marvelComics">
+    <entity name="CharacterInfo" representedClassName="CharacterInfo" syncable="YES" codeGenerationType="class">
+        <attribute name="comics" optional="YES" attributeType="String"/>
+        <attribute name="events" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="series" optional="YES" attributeType="String"/>
+        <attribute name="stories" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Characters" representedClassName="Characters" syncable="YES" codeGenerationType="class">
+        <attribute name="characterDescription" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="URI"/>
+        <attribute name="modified" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="ComicsEntity" representedClassName="ComicsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="comicsDescription" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="String"/>
@@ -7,6 +21,8 @@
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="image" optional="YES" attributeType="URI"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="creators" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Creators" inverseName="comics" inverseEntity="Creators"/>
     </entity>
     <entity name="Creators" representedClassName="Creators" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
@@ -14,5 +30,6 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="role" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="comics" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ComicsEntity" inverseName="creators" inverseEntity="ComicsEntity"/>
     </entity>
 </model>

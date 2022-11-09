@@ -51,52 +51,28 @@ struct PersistenceController {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
     
-    
-        func saveDataOf(comics: [Comic]){
-            self.container.performBackgroundTask{ (context) in
-                self.saveDataToCoreData(comics: comics, context: context)
-            }
-        }
-    
     func deleteDataOf(){
         self.container.performBackgroundTask { context in
             self.deleteObjectFromCoreData(context: context)
         }
     }
     
-        private func saveDataToCoreData(comics: [Comic], context: NSManagedObjectContext){
-            context.perform {
-                for comic in comics {
-                    let comicsEntity = ComicsEntity(context: context)
-                    comicsEntity.id = String(comic.id ?? 0)
-                    comicsEntity.title = comic.title
-                    comicsEntity.image = URL(string: "\(comic.thumbnail!.path!).\(comic.thumbnail!.extension!)")
-                    
-                    for date in comic.dates ?? [ComicDate](){
-                        if date.type == "onsaleDate"{
-                            comicsEntity.date = date.date
-                            comicsEntity.dateType = date.type
-                        }
-                    }
-                    comicsEntity.comicsDescription = comic.textObjects?.first?.text
-                }
-                do{
-                    try context.save()
-                }catch{
-                    fatalError("Failure to save context: \(error)")
-                }
-            }
-        }
-    
     private func deleteObjectFromCoreData(context: NSManagedObjectContext){
         let fetchRequestComics = NSFetchRequest<ComicsEntity>(entityName: "ComicsEntity")
         let fetchRequestCreators = NSFetchRequest<Creators>(entityName: "Creators")
+        let fetchRequestCharacters = NSFetchRequest<Characters>(entityName: "Characters")
+        let fetchRequestCharacterInfo = NSFetchRequest<CharacterInfo>(entityName: "CharacterInfo")
         do{
             let deleteComics = try context.fetch(fetchRequestComics)
-            let deleteCreators = try context.fetch(fetchRequestCreators)
+            let deleteCharacters = try context.fetch(fetchRequestCharacters)
+            _ = deleteCharacters.map({context.delete($0)})
             _ = deleteComics.map({context.delete($0)})
+            let deleteCreators = try context.fetch(fetchRequestCreators)
             _ = deleteCreators.map({context.delete($0)})
+            let deleteCharacter = try context.fetch(fetchRequestCharacterInfo)
+            _ = deleteCharacter.map({context.delete($0)})
             try context.save()
+            
         }catch{
             print("Deleting error: \(error)")
         }

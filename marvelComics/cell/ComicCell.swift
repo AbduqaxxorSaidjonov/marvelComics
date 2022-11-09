@@ -13,17 +13,22 @@ struct ComicCell: View {
     var comic: ComicsEntity
     
     var body: some View {
-        VStack(alignment: .leading){
+        HStack{
             WebImage(url: comic.image)
                 .resizable()
-                .scaledToFill()
-            //     .redacted(reason: .placeholder)
-            Text(comic.title ?? "Optional")
+                .scaledToFit()
+                .cornerRadius(20)
+            Spacer()
+            Text(comic.title ?? "Optinal")
                 .fontWeight(.heavy)
-            //                .redacted(reason: .placeholder)
+                .padding(.trailing)
         }
+        .frame(maxWidth: .infinity)
+        .frame(height: UIScreen.height / 6)
+        .background(.black.opacity(0.1))
+        .cornerRadius(20)
+        .overlay(RoundedRectangle(cornerRadius: 20).stroke(lineWidth: 1).foregroundColor(.red))
         .padding(.horizontal)
-        .padding(.bottom)
     }
 }
 

@@ -19,7 +19,33 @@ class HomeViewModel: ObservableObject{
             let comics = try? JSONDecoder().decode(ComicDataWrapper.self, from: data)
             self.isLoading = false
             self.comics.append(contentsOf: (comics?.data?.results) ?? [Comic]())
-            PersistenceController.shared.saveDataOf(comics: comics?.data?.results ?? [Comic]())
+            self.saveComics(comics: comics?.data?.results ?? [Comic]())
+        }
+    }
+    
+    func saveComics(comics: [Comic]){
+        let context = PersistenceController.shared.container.viewContext
+        
+        for comic in comics {
+            let comicsEntity = ComicsEntity(context: context)
+            comicsEntity.id = String(comic.id ?? 0)
+            comicsEntity.title = comic.title
+            comicsEntity.image = URL(string: "\(comic.thumbnail!.path!).\(comic.thumbnail!.extension!)")
+            
+            for date in comic.dates ?? [ComicDate](){
+                if date.type == "onsaleDate"{
+                    comicsEntity.date = date.date
+                    comicsEntity.dateType = date.type
+                }
+            }
+            comicsEntity.comicsDescription = comic.textObjects?.first?.text
+            comicsEntity.uuid = UUID()
+        }
+
+        do{
+                try context.save()
+        }catch{
+            fatalError("Failure to save context: \(error)")
         }
     }
 }

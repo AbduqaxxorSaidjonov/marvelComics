@@ -10,26 +10,30 @@ import SDWebImageSwiftUI
 
 struct CharacterCell: View {
     
-    var character: Character
+    var character: Characters
     
     var body: some View {
-            VStack(alignment: .leading){
-                WebImage(url: URL(string: "\(self.character.thumbnail!.path!).\(self.character.thumbnail!.extension!)"))
-                    .resizable()
-                    .scaledToFill()
-                //     .redacted(reason: .placeholder)
-                Text(character.name!)
-                    .fontWeight(.heavy)
-                //                .redacted(reason: .placeholder)
-            }
-            .padding(.horizontal)
-            .padding(.bottom)
-        
+        HStack{
+            WebImage(url: character.image)
+                .resizable()
+                .scaledToFit()
+                .cornerRadius(20)
+            Spacer()
+            Text(character.title ?? "Optinal")
+                .fontWeight(.heavy)
+                .padding(.trailing)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: UIScreen.height / 6)
+        .background(.black.opacity(0.1))
+        .cornerRadius(20)
+        .overlay(RoundedRectangle(cornerRadius: 20).stroke(lineWidth: 1).foregroundColor(.red))
+        .padding(.horizontal)
     }
 }
 
 struct CharacterCell_Previews: PreviewProvider {
     static var previews: some View {
-        CharacterCell(character: Character())
+        CharacterCell(character: Characters())
     }
 }
