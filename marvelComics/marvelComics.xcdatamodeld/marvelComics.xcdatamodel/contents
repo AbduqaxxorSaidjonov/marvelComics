@@ -26,10 +26,8 @@
     </entity>
     <entity name="Creators" representedClassName="Creators" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="image" optional="YES" attributeType="URI"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="role" optional="YES" attributeType="String"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="comics" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ComicsEntity" inverseName="creators" inverseEntity="ComicsEntity"/>
     </entity>
 </model>

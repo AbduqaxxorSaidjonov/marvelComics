@@ -19,34 +19,35 @@ class CharacterInformationViewModel: ObservableObject{
             let characters = try? JSONDecoder().decode(CharacterDataWrapper.self, from: data)
             self.isLoading = false
             self.characterInfo = characters?.data?.results ?? [Character]()
-            self.saveCharacters(characters: characters?.data?.results ?? [Character](),id: characterID)
-        }
-    }
-    
-    func saveCharacters(characters: [Character],id: String){
-        let context = PersistenceController.shared.container.viewContext
-        let entity = CharacterInfo(context: context)
-        for characters in characters{
-            if String(characters.id ?? 0) == id{
-                for comics in characters.comics?.items ?? [ComicSummary](){
-                    entity.comics = comics.name
-                }
-                for stories in characters.stories?.items ?? [StorySummary](){
-                    entity.stories = stories.name
-                }
-                for events in characters.events?.items ?? [EventSummary](){
-                    entity.events = events.name
-                }
-                for series in characters.series?.items ?? [SeriesSummary](){
-                    entity.series = series.name
+            for character in self.characterInfo{
+                if String(character.id ?? 0) == characterID{
+                    self.saveCharacters(character: character)
                 }
             }
         }
+    }
+    
+    func saveCharacters(character: Character){
+        let context = PersistenceController.shared.container.viewContext
+        for comics in character.comics?.items ?? [ComicSummary](){
+            CharacterInfo(context: context).comics = comics.name
+        }
+        for stories in character.stories?.items ?? [StorySummary](){
+            CharacterInfo(context: context).stories = stories.name
+        }
+        for events in character.events?.items ?? [EventSummary](){
+            CharacterInfo(context: context).events = events.name
+        }
+        for series in character.series?.items ?? [SeriesSummary](){
+            CharacterInfo(context: context).series = series.name
+        }
+        CharacterInfo(context: context).id = String(character.id ?? 0)
         do{
             try context.save()
         }catch{
             fatalError("Failure to save context: \(error)")
         }
+        
     }
     
 }

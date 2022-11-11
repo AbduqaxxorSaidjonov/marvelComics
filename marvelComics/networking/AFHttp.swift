@@ -27,7 +27,7 @@ class AFHttp{
         
         session.dataTask(with: url) { (data, response, error) in
             
-            print(url.absoluteString)
+            //print(url.absoluteString)
             
             if let error = error {
                 print("ERROR: \(error.localizedDescription)")
@@ -35,9 +35,9 @@ class AFHttp{
             }else{
                 
                 let jsonData = data?.prettyPrintedJSONString!
-                print("\n")
-                print(jsonData!)
-                
+//                print("\n")
+//                print(jsonData!)
+       
                 guard let data = data, let response = response as? HTTPURLResponse else {
                     print("ERROR: Couldn't read response object")
                     return

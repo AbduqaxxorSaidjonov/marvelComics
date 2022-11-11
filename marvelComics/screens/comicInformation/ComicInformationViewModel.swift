@@ -22,8 +22,8 @@ class ComicInformationViewModel: ObservableObject{
     
     func saveComicInfo(){
         let context = PersistenceController.shared.container.viewContext
-        let creators = Creators(context: context)
         for creator in comicInfo.first?.creators?.items ?? [CreatorSummary](){
+            let creators = Creators(context: context)
             creators.id = String(comicInfo.first?.id ?? 0)
             creators.role = creator.role
             creators.name = creator.name
