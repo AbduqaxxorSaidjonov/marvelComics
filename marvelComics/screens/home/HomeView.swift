@@ -68,9 +68,6 @@ struct HomeView: View {
         }
         .onAppear{
             if viewModel.comics.isEmpty{
-                if NetworkMonitor.shared.isConnected{
-                    PersistenceController.shared.deleteDataOf()
-                }
                 viewModel.getInfoFromServer()
             }
         }

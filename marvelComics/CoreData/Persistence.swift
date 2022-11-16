@@ -8,6 +8,7 @@
 import CoreData
 
 struct PersistenceController {
+    
     static let shared = PersistenceController()
     
     static var preview: PersistenceController = {
@@ -24,6 +25,7 @@ struct PersistenceController {
         }
         return result
     }()
+
     
     let container: NSPersistentCloudKitContainer
     
@@ -48,7 +50,8 @@ struct PersistenceController {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        container.viewContext.automaticallyMergesChangesFromParent = true
+        
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
     }
     
     func deleteDataOf(){

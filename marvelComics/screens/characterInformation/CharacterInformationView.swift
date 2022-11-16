@@ -17,8 +17,8 @@ struct CharacterInformationView: View {
     @StateObject var viewModel = CharacterInformationViewModel()
     
     var body: some View {
-        ScrollView{
-            VStack(alignment: .center){
+        ScrollView {
+            VStack(alignment: .center) {
                 Text(character.title ?? "")
                     .font(.system(size: 20))
                     .fontWeight(.bold)
@@ -30,67 +30,32 @@ struct CharacterInformationView: View {
                         .scaledToFill()
                 }
                 
-                VStack(alignment:.leading,spacing: 10){
-                    HStack{
+                VStack(alignment:.leading,spacing: 10) {
+                    HStack {
                         Text("Modified date: ").fontWeight(.semibold)
                             .foregroundColor(.red)
-                        Text(Utils.dateFormatter(date: character.modified ?? "None Date"))
+                        Text(character.modified?.toFormat() ?? "Can't find modified date")
                     }
                     
                     Text("Comics: ").fontWeight(.semibold).padding(.top , 10)
                         .foregroundColor(.red)
                     
-                    ForEach(characterInfo, id: \.self){character in
-                        if character.comics != nil{
-                            HStack{
+                    ForEach(characterInfo, id: \.self) { character in
+                        if character.comics != nil && self.comicId == character.comicId && self.character.id == character.characterId {
+                            HStack {
                                 Text(character.comics ?? "") +
-                                Text(",")
-                            }
-                        }
-                    }
-                    
-                    Text("Stories: ").fontWeight(.semibold).padding(.top, 10)
-                        .foregroundColor(.red)
-                    
-                    ForEach(characterInfo, id: \.self){character in
-                        if character.stories != nil{
-                            HStack{
-                                Text(character.stories ?? "") +
-                                Text(",")
-                            }
-                        }
-                    }
-                    
-                    Text("Events: ").fontWeight(.semibold).padding(.top,10)
-                        .foregroundColor(.red)
-                    ForEach(characterInfo, id: \.self){character in
-                        if character.events != nil{
-                            HStack{
-                                Text(character.events ?? "") +
-                                Text(",")
-                            }
-                        }
-                    }
-                    
-                    Text("Series: ").fontWeight(.semibold).padding(.top,10)
-                        .foregroundColor(.red)
-                    
-                    ForEach(characterInfo, id: \.self){character in
-                        if character.series != nil{
-                            HStack{
-                                Text(character.series ?? "") +
-                                Text(",")
+                                Text(" , ")
                             }
                         }
                     }
                     
                     
-                    if character.characterDescription == ""{
+                    if character.characterDescription == "" {
                         Text("Description: ")
                             .fontWeight(.semibold)
                             .foregroundColor(.red) +
                         Text(" No Description")
-                    }else{
+                    } else {
                         Text("Description: ")
                             .fontWeight(.semibold)
                             .foregroundColor(.red) +
@@ -109,7 +74,7 @@ struct CharacterInformationView: View {
             Image(systemName: "chevron.backward")
         }))
         .navigationBarBackButtonHidden(true)
-        .onAppear{
+        .onAppear {
             self.viewModel.getCharactersSingle(comicId: comicId, characterID: character.id ?? "")
         }
     }

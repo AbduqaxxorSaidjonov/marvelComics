@@ -15,42 +15,44 @@ struct CharactersView: View {
     @FetchRequest(entity: Characters.entity(), sortDescriptors: []) var characters: FetchedResults<Characters>
     
     var body: some View {
-        ScrollView{
-            VStack{
-                if !viewModel.isLoading && viewModel.characters.count == 0{
-                    VStack{
+        ScrollView {
+            VStack {
+                if !viewModel.isLoading && viewModel.characters.count == 0 {
+                    VStack {
                         Spacer()
                         Text("Characters not found")
                             .fontWeight(.bold)
                         Spacer()
                     }
                     .frame(maxHeight: .infinity)
-                }else{
-                    ForEach(characters,id: \.self){character in
-                        NavigationLink {
-                            CharacterInformationView(comicId: String(comicId), character: character)
-                        } label: {
-                            CharacterCell(character: character)
+                } else {
+                    ForEach(characters,id: \.self) { character in
+                        if String(self.comicId) == character.comicId {
+                            NavigationLink {
+                                CharacterInformationView(comicId: String(comicId), character: character)
+                            } label: {
+                                CharacterCell(character: character)
+                            }
                         }
                     }
                 }
                 
-                if viewModel.characters.count > 20 && viewModel.characters.count == viewModel.offset && viewModel.characters.count != 0{
+                if viewModel.characters.count > 20 && viewModel.characters.count == viewModel.offset && viewModel.characters.count != 0 {
                     ProgressView()
-                        .onAppear{
+                        .onAppear {
                             print("Fetching data")
                             viewModel.getCharactersList(comicId: String(comicId))
                         }
                 }
-                else{
-                    GeometryReader{reader -> Color in
+                else {
+                    GeometryReader { reader -> Color in
                         
                         let minY = reader.frame(in: .global).minY
                         let height = UIScreen.height / 1.3
                         
-                        if !viewModel.characters.isEmpty && minY < height{
+                        if !viewModel.characters.isEmpty && minY < height {
                             
-                            DispatchQueue.main.async{
+                            DispatchQueue.main.async {
                                 viewModel.offset = viewModel.characters.count
                             }
                         }
@@ -60,14 +62,23 @@ struct CharactersView: View {
                 }
             }
             .padding(.vertical)
-            if viewModel.isLoading{
-                ZStack{
+            if viewModel.isLoading {
+                ZStack {
                     Color(.systemBackground)
                         .ignoresSafeArea()
                         .opacity(0.8)
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: Color.red))
-                        .scaleEffect(2)
+                    VStack {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.red))
+                            .scaleEffect(2)
+                        if !viewModel.isConnected{
+                            Text("Check Internet Connection")
+                                .font(.system(size: 20))
+                                .fontWeight(.bold)
+                                .padding(.top , 20)
+                                .foregroundColor(Color.red)
+                        }
+                    }
                 }
                 .padding(.vertical ,UIScreen.height / 3)
             }
@@ -81,9 +92,9 @@ struct CharactersView: View {
             Image(systemName: "chevron.backward")
         }))
         .navigationBarBackButtonHidden(true)
-        .onAppear{
+        .onAppear {
             if viewModel.characters.isEmpty{
-                    viewModel.getCharactersList(comicId: String(comicId))
+                viewModel.getCharactersList(comicId: String(comicId))
             }
         }
         

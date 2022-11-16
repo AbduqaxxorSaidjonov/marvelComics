@@ -39,7 +39,6 @@ class HomeViewModel: ObservableObject{
                 }
             }
             comicsEntity.comicsDescription = comic.textObjects?.first?.text
-            comicsEntity.uuid = UUID()
         }
 
         do{

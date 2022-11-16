@@ -31,7 +31,7 @@ struct ComicInformationView: View {
                     VStack(alignment: .leading){
                         HStack{
                             Text("Published date: ").fontWeight(.semibold)
-                            Text(Utils.dateFormatter(date: comic.date ?? "Published date can't find"))
+                            Text(comic.date?.toFormat() ?? "Can't find published date")
                         }
                         .padding(.top ,5)
                         

@@ -8,25 +8,27 @@
 import Foundation
 import UIKit
 
-class Utils{
-    static func dateFormatter(date: String) -> String{
+extension String {
+    
+    func toFormat(_ toFormat: String = "MMM d,yyyy", fromFormat: String = "yyyy-MM-dd'T'HH:mm:ssZ") -> String {
+        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        let stringToDate = dateFormatter.date(from: date)
+        dateFormatter.dateFormat = fromFormat
+        let stringToDate = dateFormatter.date(from: self)
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, yyyy"
-        let resultDate: String
-        if stringToDate == nil{
-            return ""
-        }else{
-            resultDate = formatter.string(from: stringToDate ?? Date())
+        formatter.dateFormat = toFormat
+        
+        if let date = stringToDate {
+            return formatter.string(from: date)
         }
-        return resultDate
+        return ""
     }
 }
 
-extension UIScreen{
+
+
+extension UIScreen {
     static let width = UIScreen.main.bounds.size.width
     static let height = UIScreen.main.bounds.size.height
 }

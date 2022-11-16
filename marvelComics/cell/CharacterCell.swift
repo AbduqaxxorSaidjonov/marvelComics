@@ -19,7 +19,7 @@ struct CharacterCell: View {
                 .scaledToFit()
                 .cornerRadius(20)
             Spacer()
-            Text(character.title ?? "Optinal")
+            Text(character.title ?? "Optional")
                 .fontWeight(.heavy)
                 .padding(.trailing)
         }
