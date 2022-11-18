@@ -61,7 +61,7 @@ class AFHttp{
         let ts = String(Date().timeIntervalSince1970)
         let hash = MD5(data: "\(ts)\(private_key)\(public_key)")
         
-        let queryItems = [URLQueryItem(name: "limit", value: "20"), URLQueryItem(name: "offset", value: String(offset)), URLQueryItem(name: "ts", value: ts), URLQueryItem(name: "apikey", value: public_key), URLQueryItem(name: "hash", value: hash)]
+        let queryItems = [URLQueryItem(name: "orderBy", value: "-modified") , URLQueryItem(name: "limit", value: "20"), URLQueryItem(name: "offset", value: String(offset)), URLQueryItem(name: "ts", value: ts), URLQueryItem(name: "apikey", value: public_key), URLQueryItem(name: "hash", value: hash)]
         
         var urlComps = URLComponents(string: base_url + url)!
         

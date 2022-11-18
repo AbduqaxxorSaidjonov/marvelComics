@@ -12,13 +12,13 @@ struct HomeView: View {
     
     @StateObject var viewModel = HomeViewModel()
     @Binding var tabSelection: Int
-    @FetchRequest(entity: ComicsEntity.entity(), sortDescriptors: []) var comics: FetchedResults<ComicsEntity>
+    @FetchRequest(entity: ComicsEntity.entity() , sortDescriptors: [NSSortDescriptor(keyPath: \ComicsEntity.modified, ascending: false)], predicate: NSPredicate(format: "modified > %@", "")) var comics: FetchedResults<ComicsEntity>
     
     var body: some View {
-        NavigationView{
-            ScrollView{
-                VStack{
-                    ForEach(comics, id: \.self){comic in
+        NavigationView {
+            ScrollView {
+                    VStack {
+                    ForEach(comics){comic in
                         NavigationLink {
                             ComicInformationView(comic: comic)
                         } label: {
@@ -37,7 +37,7 @@ struct HomeView: View {
                         GeometryReader{reader -> Color in
                             
                             let minY = reader.frame(in: .global).minY
-                            let height = UIScreen.height / 0.1
+                            let height = UIScreen.height
                             
                             if !viewModel.comics.isEmpty && minY < height{
                                 
@@ -65,6 +65,11 @@ struct HomeView: View {
             }
             .listStyle(PlainListStyle())
             .navigationBarTitle("Marvel Comics", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                PersistenceController.shared.deleteDataOf()
+            }, label: {
+                Image(systemName: "trash")
+            }))
         }
         .onAppear{
             if viewModel.comics.isEmpty{

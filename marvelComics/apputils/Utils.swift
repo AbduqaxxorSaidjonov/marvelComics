@@ -11,7 +11,6 @@ import UIKit
 extension String {
     
     func toFormat(_ toFormat: String = "MMM d,yyyy", fromFormat: String = "yyyy-MM-dd'T'HH:mm:ssZ") -> String {
-        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = fromFormat
@@ -24,8 +23,15 @@ extension String {
         }
         return ""
     }
-}
 
+    func stringToDate(fromFormat: String = "yyyy-MM-dd'T'HH:mm:ssZ") -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = fromFormat
+        let date = dateFormatter.date(from: self) ?? Date()
+        return date
+    }
+}
 
 
 extension UIScreen {

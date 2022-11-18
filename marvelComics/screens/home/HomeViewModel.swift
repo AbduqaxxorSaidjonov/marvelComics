@@ -19,7 +19,7 @@ class HomeViewModel: ObservableObject{
             let comics = try? JSONDecoder().decode(ComicDataWrapper.self, from: data)
             self.isLoading = false
             self.comics.append(contentsOf: (comics?.data?.results) ?? [Comic]())
-            self.saveComics(comics: comics?.data?.results ?? [Comic]())
+            self.saveComics(comics: self.comics)
         }
     }
     
@@ -31,6 +31,8 @@ class HomeViewModel: ObservableObject{
             comicsEntity.id = String(comic.id ?? 0)
             comicsEntity.title = comic.title
             comicsEntity.image = URL(string: "\(comic.thumbnail!.path!).\(comic.thumbnail!.extension!)")
+            comicsEntity.uuid = UUID()
+            comicsEntity.modified = comic.modified?.toFormat("MMM d,yyyy  HH:mm:ss")
             
             for date in comic.dates ?? [ComicDate](){
                 if date.type == "onsaleDate"{
@@ -40,7 +42,7 @@ class HomeViewModel: ObservableObject{
             }
             comicsEntity.comicsDescription = comic.textObjects?.first?.text
         }
-
+        
         do{
                 try context.save()
         }catch{

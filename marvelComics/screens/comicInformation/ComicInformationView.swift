@@ -23,6 +23,8 @@ struct ComicInformationView: View {
                         .fontWeight(.bold)
                         .padding(.all , 10)
                     
+                    Divider()
+                    
                     if comic.image != nil{
                         WebImage(url: comic.image)
                             .resizable()
@@ -32,6 +34,12 @@ struct ComicInformationView: View {
                         HStack{
                             Text("Published date: ").fontWeight(.semibold)
                             Text(comic.date?.toFormat() ?? "Can't find published date")
+                        }
+                        .padding(.top ,5)
+                        
+                        HStack{
+                            Text("Modified date: ").fontWeight(.semibold)
+                            Text(comic.modified ?? "Can't find modified date")
                         }
                         .padding(.top ,5)
                         

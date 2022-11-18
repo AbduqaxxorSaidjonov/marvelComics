@@ -95,6 +95,9 @@ struct CharactersView: View {
         .onAppear {
             if viewModel.characters.isEmpty{
                 viewModel.getCharactersList(comicId: String(comicId))
+                if NetworkMonitor.shared.isConnected{
+                    viewModel.isConnected = true
+                }
             }
         }
         
