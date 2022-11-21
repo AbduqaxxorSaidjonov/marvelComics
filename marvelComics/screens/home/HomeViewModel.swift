@@ -33,6 +33,7 @@ class HomeViewModel: ObservableObject{
             comicsEntity.image = URL(string: "\(comic.thumbnail!.path!).\(comic.thumbnail!.extension!)")
             comicsEntity.uuid = UUID()
             comicsEntity.modified = comic.modified?.toFormat("MMM d,yyyy  HH:mm:ss")
+            comicsEntity.modifiedDate = comic.modified?.stringToDate()
             
             for date in comic.dates ?? [ComicDate](){
                 if date.type == "onsaleDate"{

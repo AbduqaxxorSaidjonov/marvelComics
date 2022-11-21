@@ -12,7 +12,7 @@ struct HomeView: View {
     
     @StateObject var viewModel = HomeViewModel()
     @Binding var tabSelection: Int
-    @FetchRequest(entity: ComicsEntity.entity() , sortDescriptors: [NSSortDescriptor(keyPath: \ComicsEntity.modified, ascending: false)], predicate: NSPredicate(format: "modified > %@", "")) var comics: FetchedResults<ComicsEntity>
+    @FetchRequest(entity: ComicsEntity.entity() , sortDescriptors: [NSSortDescriptor(keyPath: \ComicsEntity.modifiedDate, ascending: false)]) var comics: FetchedResults<ComicsEntity>
     
     var body: some View {
         NavigationView {
@@ -29,7 +29,6 @@ struct HomeView: View {
                     if viewModel.comics.count == viewModel.offset && !viewModel.comics.isEmpty{
                         ProgressView()
                             .onAppear{
-                                print("Fetching data")
                                 viewModel.getInfoFromServer()
                             }
                     }
@@ -37,7 +36,7 @@ struct HomeView: View {
                         GeometryReader{reader -> Color in
                             
                             let minY = reader.frame(in: .global).minY
-                            let height = UIScreen.height
+                            let height = UIScreen.height / 0.1
                             
                             if !viewModel.comics.isEmpty && minY < height{
                                 

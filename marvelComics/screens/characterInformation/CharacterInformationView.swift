@@ -30,11 +30,12 @@ struct CharacterInformationView: View {
                         .scaledToFill()
                 }
                 
+                HStack{
                 VStack(alignment:.leading,spacing: 10) {
                     HStack {
                         Text("Modified date: ").fontWeight(.semibold)
                             .foregroundColor(.red)
-                        Text(character.modified?.toFormat() ?? "Can't find modified date")
+                        Text(character.modified?.toFormat("MMM d,yyyy  HH:mm:ss") ?? "Can't find modified date")
                     }
                     
                     Text("Comics: ").fontWeight(.semibold).padding(.top , 10)
@@ -62,6 +63,8 @@ struct CharacterInformationView: View {
                         Text(character.characterDescription ?? " No Description")
                     }
                 }
+                    Spacer()
+            }
                 .padding(.all , 10)
                 
             }

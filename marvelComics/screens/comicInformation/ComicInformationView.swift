@@ -17,49 +17,52 @@ struct ComicInformationView: View {
     
     var body: some View {
         ScrollView{
-                VStack(alignment: .center){
-                    Text(comic.title ?? "")
-                        .font(.system(size: 20))
-                        .fontWeight(.bold)
-                        .padding(.all , 10)
-                    
-                    Divider()
-                    
-                    if comic.image != nil{
-                        WebImage(url: comic.image)
-                            .resizable()
-                            .scaledToFill()
-                    }
-                    VStack(alignment: .leading){
-                        HStack{
-                            Text("Published date: ").fontWeight(.semibold)
-                            Text(comic.date?.toFormat() ?? "Can't find published date")
-                        }
-                        .padding(.top ,5)
-                        
-                        HStack{
-                            Text("Modified date: ").fontWeight(.semibold)
-                            Text(comic.modified ?? "Can't find modified date")
-                        }
-                        .padding(.top ,5)
-                        
-                        ForEach(cretorInfo, id: \.self){creator in
-                            if comic.id == creator.id{
-                                HStack{
-                                    Text("\((creator.role ?? "").uppercased()): ")
-                                        .fontWeight(.semibold)
-                                    Text(" \(creator.name ?? "")")
-                                }
-                                .padding(.top , 5)
-                            }
-                        }
-                        HStack{
-                            Text("Description: ").fontWeight(.semibold) +
-                            Text(comic.comicsDescription ?? "No description")
-                        }
-                        .padding(.top,5)
-                    }
+            VStack(alignment: .center){
+                Text(comic.title ?? "")
+                    .font(.system(size: 20))
+                    .fontWeight(.bold)
                     .padding(.all , 10)
+                
+                Divider()
+                
+                if comic.image != nil{
+                    WebImage(url: comic.image)
+                        .resizable()
+                        .scaledToFill()
+                }
+                HStack{
+                VStack(alignment: .leading){
+                    HStack{
+                        Text("Published date: ").fontWeight(.semibold)
+                        Text(comic.date?.toFormat("MMM d,yyyy  HH:mm:ss") ?? "Can't find published date")
+                    }
+                    .padding(.top ,5)
+                    
+                    HStack{
+                        Text("Modified date: ").fontWeight(.semibold)
+                        Text(comic.modified ?? "Can't find modified date")
+                    }
+                    .padding(.top ,5)
+                    
+                    ForEach(cretorInfo, id: \.self){creator in
+                        if comic.id == creator.id{
+                            HStack{
+                                Text("\((creator.role ?? "").uppercased()): ")
+                                    .fontWeight(.semibold)
+                                Text(" \(creator.name ?? "")")
+                            }
+                            .padding(.top , 5)
+                        }
+                    }
+                    HStack{
+                        Text("Description: ").fontWeight(.semibold) +
+                        Text(comic.comicsDescription ?? "No description")
+                    }
+                    .padding(.top,5)
+                }
+                    Spacer()
+            }
+                .padding(.all , 10)
                     NavigationLink {
                         CharactersView(comicId: Int(comic.id ?? "0") ?? 0)
                     } label: {
