@@ -49,3 +49,23 @@ extension Data{
         return prettyPrintedString
     }
 }
+
+enum Privacy: String, Identifiable, CaseIterable {
+    case focDate = "FocDate"
+    case onsaleDate = "Onsale Date"
+    case title = "Title"
+    case issueNumber = "Issue Number"
+    case modified = "Modified"
+    case _focDate = "-FocDate"
+    case _onsaleDate = "-Onsale Date"
+    case _title = "-Title"
+    case _issueNumber = "-Issue Number"
+    case _modified = "-Modified"
+    var id: String { self.rawValue }
+}
+
+enum PrivacyBool: String, Identifiable, CaseIterable {
+    case `true` = "true"
+    case `false` = "false"
+    var id: String { self.rawValue }
+}
