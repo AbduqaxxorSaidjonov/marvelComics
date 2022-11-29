@@ -7,18 +7,19 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import CoreData
 
 struct HomeView: View {
     
     @StateObject var viewModel = HomeViewModel()
     @Binding var tabSelection: Int
-    @FetchRequest(entity: ComicsEntity.entity() , sortDescriptors: [NSSortDescriptor(keyPath: \ComicsEntity.modifiedDate, ascending: false)]) var comics: FetchedResults<ComicsEntity>
+    @FetchRequest(entity: ComicsEntity.entity() , sortDescriptors: [NSSortDescriptor(key: "modified", ascending: false)]) var comics: FetchedResults<ComicsEntity>
     
     var body: some View {
         NavigationView {
             ScrollView {
-                    VStack {
-                    ForEach(comics){comic in
+                VStack {
+                    ForEach(comics , id: \.self){comic in
                         NavigationLink {
                             ComicInformationView(comic: comic)
                         } label: {
@@ -26,22 +27,23 @@ struct HomeView: View {
                         }
                     }
                     
-                    if viewModel.comics.count == viewModel.offset && !viewModel.comics.isEmpty{
+                    if comics.count == viewModel.offset && !viewModel.comics.isEmpty{
                         ProgressView()
                             .onAppear{
                                 viewModel.getInfoFromServer()
+                                print("Fetching")
                             }
                     }
                     else{
                         GeometryReader{reader -> Color in
                             
                             let minY = reader.frame(in: .global).minY
-                            let height = UIScreen.height / 0.1
+                            let height = UIScreen.height / 1.5
                             
                             if !viewModel.comics.isEmpty && minY < height{
                                 
                                 DispatchQueue.main.async{
-                                    viewModel.offset = viewModel.comics.count
+                                    viewModel.offset = comics.count
                                 }
                             }
                             return Color.clear
@@ -64,14 +66,14 @@ struct HomeView: View {
             }
             .listStyle(PlainListStyle())
             .navigationBarTitle("Marvel Comics", displayMode: .inline)
-            .navigationBarItems(trailing: Button(action: {
-                PersistenceController.shared.deleteDataOf()
-            }, label: {
-                Image(systemName: "trash")
-            }))
         }
         .onAppear{
-            if viewModel.comics.isEmpty{
+            if comics.isEmpty {
+                viewModel.offset = 0
+                viewModel.comics.removeAll()
+                viewModel.getInfoFromServer()
+            } else if viewModel.comics.isEmpty {
+                viewModel.offset = comics.count - 20
                 viewModel.getInfoFromServer()
             }
         }

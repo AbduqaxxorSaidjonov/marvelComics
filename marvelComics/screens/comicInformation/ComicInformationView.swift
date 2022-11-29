@@ -34,13 +34,13 @@ struct ComicInformationView: View {
                 VStack(alignment: .leading){
                     HStack{
                         Text("Published date: ").fontWeight(.semibold)
-                        Text(comic.date?.toFormat("MMM d,yyyy  HH:mm:ss") ?? "Can't find published date")
+                        Text(comic.onsaleDate?.toFormat("MMM d,yyyy  HH:mm:ss") ?? "Can't find published date")
                     }
                     .padding(.top ,5)
                     
                     HStack{
                         Text("Modified date: ").fontWeight(.semibold)
-                        Text(comic.modified ?? "Can't find modified date")
+                        Text(comic.modified?.toFormat("MMM d,yyyy  HH:mm:ss") ?? "Can't find modified date")
                     }
                     .padding(.top ,5)
                     

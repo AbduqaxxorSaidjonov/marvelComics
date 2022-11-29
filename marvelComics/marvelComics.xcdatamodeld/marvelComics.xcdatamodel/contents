@@ -28,12 +28,12 @@
     </entity>
     <entity name="ComicsEntity" representedClassName="ComicsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="comicsDescription" optional="YES" attributeType="String"/>
-        <attribute name="date" optional="YES" attributeType="String"/>
-        <attribute name="dateType" optional="YES" attributeType="String"/>
+        <attribute name="focDate" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="image" optional="YES" attributeType="URI"/>
+        <attribute name="issueNumber" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="modified" optional="YES" attributeType="String"/>
-        <attribute name="modifiedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="onsaleDate" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <uniquenessConstraints>

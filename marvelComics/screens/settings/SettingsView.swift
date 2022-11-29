@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct SettingsView: View {
-
-    @State var selectionOrder = Privacy.modified
+    
+    @Environment(\.managedObjectContext) var moc
+    @Binding var tabSelection: Int
+    @StateObject var viewModel = SettingsViewModel()
+    @State var selectionOrder = Privacy._modified
     @State var selectionBool = PrivacyBool.false
     @State var showingAlert = false
     @State var showingAlert2 = false
@@ -18,7 +21,6 @@ struct SettingsView: View {
         NavigationView {
             VStack (alignment: .leading, spacing: 15) {
                 HStack {
-                    
                     Button {
                         self.showingAlert = true
                     } label: {
@@ -45,7 +47,7 @@ struct SettingsView: View {
                         } label: {
                         }
                     } label: {
-                        HStack{
+                        HStack {
                             Spacer()
                             Text(selectionOrder.rawValue)
                                 .foregroundColor(.red)
@@ -62,7 +64,7 @@ struct SettingsView: View {
                     }.id(selectionOrder)
                 }
                 
-                HStack{
+                HStack {
                     
                     Button {
                         self.showingAlert2 = true
@@ -90,7 +92,7 @@ struct SettingsView: View {
                         } label: {
                         }
                     } label: {
-                        HStack{
+                        HStack {
                             Spacer()
                             Text(selectionBool.rawValue)
                                 .foregroundColor(.red)
@@ -105,7 +107,21 @@ struct SettingsView: View {
                         .background(.gray.opacity(0.1))
                         .cornerRadius(10)
                     }.id(selectionBool)
-                    
+                }
+                Button {
+                    PersistenceController.shared.deleteObject(context: moc)
+                    viewModel.saveSettings(order: selectionOrder.rawValue, ascending: selectionBool.rawValue)
+                    self.tabSelection = 0
+                } label: {
+                    Text("Save")
+                        .fontWeight(.bold)
+                        .foregroundColor(.red)
+                        .font(.system(size: 20))
+                        .padding(15)
+                        .frame(maxWidth: .infinity)
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 2).foregroundColor(.red))
+                        .background(.gray.opacity(0.1))
+                        .cornerRadius(10)
                 }
                 Spacer()
             }
@@ -117,6 +133,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(tabSelection: .constant(1))
     }
 }

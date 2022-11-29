@@ -53,13 +53,7 @@ struct PersistenceController {
         container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
     }
     
-    func deleteDataOf(){
-        self.container.performBackgroundTask { context in
-            self.deleteObjectFromCoreData(context: context)
-        }
-    }
-    
-    private func deleteObjectFromCoreData(context: NSManagedObjectContext){
+     func deleteObject(context: NSManagedObjectContext){
         let fetchRequestComics = NSFetchRequest<ComicsEntity>(entityName: "ComicsEntity")
         let fetchRequestCreators = NSFetchRequest<Creators>(entityName: "Creators")
         let fetchRequestCharacters = NSFetchRequest<Characters>(entityName: "Characters")
@@ -74,7 +68,7 @@ struct PersistenceController {
             let deleteCharacter = try context.fetch(fetchRequestCharacterInfo)
             _ = deleteCharacter.map({context.delete($0)})
             try context.save()
-            
+            print("Deleted")
         }catch{
             print("Deleting error: \(error)")
         }

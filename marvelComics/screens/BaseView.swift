@@ -22,7 +22,7 @@ struct BaseView: View {
                 }
                 .tag(0)
                 
-            SettingsView()
+            SettingsView(tabSelection: $tabSelection)
                 .tabItem {
                     VStack{
                         Image(systemName: "gearshape.fill")

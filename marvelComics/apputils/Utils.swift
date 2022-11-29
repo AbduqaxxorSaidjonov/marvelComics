@@ -21,7 +21,7 @@ extension String {
         if let date = stringToDate {
             return formatter.string(from: date)
         }
-        return ""
+        return "No Date"
     }
 
     func stringToDate(fromFormat: String = "yyyy-MM-dd'T'HH:mm:ssZ") -> Date {
@@ -51,16 +51,16 @@ extension Data{
 }
 
 enum Privacy: String, Identifiable, CaseIterable {
-    case focDate = "FocDate"
-    case onsaleDate = "Onsale Date"
-    case title = "Title"
-    case issueNumber = "Issue Number"
-    case modified = "Modified"
-    case _focDate = "-FocDate"
-    case _onsaleDate = "-Onsale Date"
-    case _title = "-Title"
-    case _issueNumber = "-Issue Number"
-    case _modified = "-Modified"
+    case focDate = "focDate"
+    case onsaleDate = "onsaleDate"
+    case title = "title"
+    case issueNumber = "issueNumber"
+    case modified = "modified"
+    case _focDate = "-focDate"
+    case _onsaleDate = "-onsaleDate"
+    case _title = "-title"
+    case _issueNumber = "-issueNumber"
+    case _modified = "-modified"
     var id: String { self.rawValue }
 }
 
