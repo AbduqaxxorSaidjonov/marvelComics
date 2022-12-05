@@ -13,7 +13,7 @@ struct HomeView: View {
     
     @StateObject var viewModel = HomeViewModel()
     @Binding var tabSelection: Int
-    @FetchRequest(entity: ComicsEntity.entity() , sortDescriptors: [NSSortDescriptor(key: "modified", ascending: false)]) var comics: FetchedResults<ComicsEntity>
+    @FetchRequest(entity: ComicsEntity.entity() , sortDescriptors: [NSSortDescriptor(key: UserDefaults.standard.string(forKey: "order"), ascending: UserDefaults.standard.bool(forKey: "ascending"))]) var comics: FetchedResults<ComicsEntity>
     
     var body: some View {
         NavigationView {

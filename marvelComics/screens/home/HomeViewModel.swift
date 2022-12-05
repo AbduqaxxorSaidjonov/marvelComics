@@ -50,7 +50,5 @@ class HomeViewModel: ObservableObject {
             fatalError("Failure to save context: \(error)")
         }
     }
-    
-   
 
 }

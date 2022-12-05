@@ -73,4 +73,11 @@ struct PersistenceController {
             print("Deleting error: \(error)")
         }
     }
+    
+    func deleteUserdefaults(){
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "order")
+        defaults.removeObject(forKey: "ascending")
+        print("Deleted defults")
+    }
 }

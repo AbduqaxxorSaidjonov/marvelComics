@@ -27,7 +27,7 @@ class AFHttp{
         
         session.dataTask(with: url) { (data, response, error) in
             
-            //print(url.absoluteString)
+            print(url.absoluteString)
             
             if let error = error {
                 print("ERROR: \(error.localizedDescription)")
@@ -35,8 +35,8 @@ class AFHttp{
             }else{
                 
                 let jsonData = data?.prettyPrintedJSONString!
-                //print("\n")
-                //print(jsonData!)
+                print("\n")
+                print(jsonData!)
                 
                 guard let data = data, let response = response as? HTTPURLResponse else {
                     print("ERROR: Couldn't read response object")
@@ -60,15 +60,13 @@ class AFHttp{
     class func server(url: String,offset: Int) -> String{
         let ts = String(Date().timeIntervalSince1970)
         let hash = MD5(data: "\(ts)\(private_key)\(public_key)")
-        let defaults = UserDefaults.standard
-        
-        var orderBy = defaults.string(forKey: "order")
+        var orderBy = UserDefaults.standard.string(forKey: "order")
         
         if orderBy == nil || url != "/comics"{
-            orderBy = "-modified"
+            orderBy = "modified"
         }
         
-        let queryItems = [URLQueryItem(name: "orderBy", value: orderBy) , URLQueryItem(name: "limit", value: "20"), URLQueryItem(name: "offset", value: String(offset)), URLQueryItem(name: "ts", value: ts), URLQueryItem(name: "apikey", value: public_key), URLQueryItem(name: "hash", value: hash)]
+        let queryItems = [URLQueryItem(name: "orderBy", value: "-\(orderBy ?? "-modified")") , URLQueryItem(name: "limit", value: "20"), URLQueryItem(name: "offset", value: String(offset)), URLQueryItem(name: "ts", value: ts), URLQueryItem(name: "apikey", value: public_key), URLQueryItem(name: "hash", value: hash)]
         
         var urlComps = URLComponents(string: base_url + url)!
         

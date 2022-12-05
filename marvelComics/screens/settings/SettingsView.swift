@@ -9,17 +9,19 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @Environment(\.managedObjectContext) var moc
     @Binding var tabSelection: Int
-    @StateObject var viewModel = SettingsViewModel()
-    @State var selectionOrder = Privacy._modified
-    @State var selectionBool = PrivacyBool.false
     @State var showingAlert = false
     @State var showingAlert2 = false
+    @State var isExpanded = false
+    @State var isExpandedBool = false
+    @State var selectionBool = UserDefaults.standard.bool(forKey: "ascending")
+    @State var selectionOrder = UserDefaults.standard.string(forKey: "order")
+    @Environment(\.managedObjectContext) var moc
+    @StateObject var viewModel = SettingsViewModel()
     
     var body: some View {
         NavigationView {
-            VStack (alignment: .leading, spacing: 15) {
+            VStack(alignment: .leading , spacing: 15) {
                 HStack {
                     Button {
                         self.showingAlert = true
@@ -38,34 +40,34 @@ struct SettingsView: View {
                     Text("Order by:")
                         .font(.system(size: 25))
                         .fontWeight(.semibold)
-                    Menu {
-                        Picker(selection: $selectionOrder) {
-                            ForEach(Privacy.allCases) { value in
-                                Text(value.rawValue)
-                                    .tag(value)
-                            }
-                        } label: {
-                        }
-                    } label: {
-                        HStack {
-                            Spacer()
-                            Text(selectionOrder.rawValue)
-                                .foregroundColor(.red)
-                                .font(.system(size: 20))
-                                .fontWeight(.bold)
-                            Image(systemName: "chevron.down")
-                                .foregroundColor(.red)
-                            Spacer()
-                        }
-                        .padding(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 2).foregroundColor(.red))
-                        .background(.gray.opacity(0.1))
-                        .cornerRadius(10)
-                    }.id(selectionOrder)
-                }
-                
-                HStack {
                     
+                    DisclosureGroup(selectionOrder ?? "modified", isExpanded: $isExpanded) {
+                        VStack {
+                            ForEach(Privacy.allCases , id: \.self) {order in
+                                HStack {
+                                    Text("\(order.rawValue)")
+                                        .font(.system(size: 20 , weight: .semibold))
+                                        .padding(.all , 5)
+                                        .onTapGesture {
+                                            self.selectionOrder = order.rawValue
+                                            withAnimation {
+                                                self.isExpanded.toggle()
+                                            }
+                                        }
+                                    Spacer()
+                                }
+                            }
+                        }
+                    }
+                    .accentColor(.red)
+                    .font(.system(size: 20 , weight: .semibold))
+                    .foregroundColor(.red)
+                    .padding(8)
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 3).foregroundColor(.red))
+                    .background(.gray.opacity(0.1))
+                    .cornerRadius(10)
+                }
+                HStack {
                     Button {
                         self.showingAlert2 = true
                     } label: {
@@ -83,34 +85,42 @@ struct SettingsView: View {
                     Text("Ascending:")
                         .font(.system(size: 25))
                         .fontWeight(.semibold)
-                    Menu {
-                        Picker(selection: $selectionBool) {
-                            ForEach(PrivacyBool.allCases) { value in
-                                Text(value.rawValue)
-                                    .tag(value)
+                    
+                    DisclosureGroup(selectionBool ? "true" : "false", isExpanded: $isExpandedBool) {
+                        VStack {
+                            ForEach(PrivacyBool.allCases , id: \.self){ selection in
+                                HStack {
+                                    Text("\(selection.rawValue)")
+                                        .font(.system(size: 20 , weight: .semibold))
+                                        .padding(.all , 5)
+                                        .onTapGesture {
+                                            if selection.rawValue == "true" {
+                                                self.selectionBool = true
+                                            } else {
+                                                self.selectionBool = false
+                                            }
+                                            withAnimation {
+                                                self.isExpandedBool.toggle()
+                                            }
+                                        }
+                                    Spacer()
+                                }
                             }
-                        } label: {
                         }
-                    } label: {
-                        HStack {
-                            Spacer()
-                            Text(selectionBool.rawValue)
-                                .foregroundColor(.red)
-                                .font(.system(size: 20))
-                                .fontWeight(.bold)
-                            Image(systemName: "chevron.down")
-                                .foregroundColor(.red)
-                            Spacer()
-                        }
-                        .padding(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 2).foregroundColor(.red))
-                        .background(.gray.opacity(0.1))
-                        .cornerRadius(10)
-                    }.id(selectionBool)
+                    }
+                    .accentColor(.red)
+                    .font(.system(size: 20 , weight: .semibold))
+                    .foregroundColor(.red)
+                    .padding(8)
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 3).foregroundColor(.red))
+                    .background(.gray.opacity(0.1))
+                    .cornerRadius(10)
                 }
+                
                 Button {
                     PersistenceController.shared.deleteObject(context: moc)
-                    viewModel.saveSettings(order: selectionOrder.rawValue, ascending: selectionBool.rawValue)
+                    PersistenceController.shared.deleteUserdefaults()
+                    viewModel.saveSettings(order: selectionOrder ?? "modified", ascending: selectionBool)
                     self.tabSelection = 0
                 } label: {
                     Text("Save")
@@ -119,14 +129,15 @@ struct SettingsView: View {
                         .font(.system(size: 20))
                         .padding(15)
                         .frame(maxWidth: .infinity)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 2).foregroundColor(.red))
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 3).foregroundColor(.red))
                         .background(.gray.opacity(0.1))
                         .cornerRadius(10)
                 }
+                
                 Spacer()
             }
             .padding(.all)
-            .navigationBarTitle("Settings",displayMode: .inline)
+            .navigationBarTitle("Settings", displayMode: .inline)
         }
     }
 }

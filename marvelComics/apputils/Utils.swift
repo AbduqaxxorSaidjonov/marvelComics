@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 extension String {
-    
     func toFormat(_ toFormat: String = "MMM d,yyyy", fromFormat: String = "yyyy-MM-dd'T'HH:mm:ssZ") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -22,14 +21,6 @@ extension String {
             return formatter.string(from: date)
         }
         return "No Date"
-    }
-
-    func stringToDate(fromFormat: String = "yyyy-MM-dd'T'HH:mm:ssZ") -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = fromFormat
-        let date = dateFormatter.date(from: self) ?? Date()
-        return date
     }
 }
 
@@ -56,11 +47,6 @@ enum Privacy: String, Identifiable, CaseIterable {
     case title = "title"
     case issueNumber = "issueNumber"
     case modified = "modified"
-    case _focDate = "-focDate"
-    case _onsaleDate = "-onsaleDate"
-    case _title = "-title"
-    case _issueNumber = "-issueNumber"
-    case _modified = "-modified"
     var id: String { self.rawValue }
 }
 
